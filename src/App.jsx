@@ -13,6 +13,31 @@ function App() {
   const [answer , SetAnswer] = useState("");
   const [loading , SetLoading] = useState(false);
   const [guess , SetGuess] = useState("");
+  const [inputValue, setInputValue] = useState("");
+  const [Data, SetData] = useState({});
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const token = getToken();
+        const apiUrl = `${import.meta.env.VITE_REACT_API_URL}/Getequation`;
+        const headers = {
+          Authorization: `Bearer ${token}`
+        };
+        const response = await axios.get(apiUrl, { headers });
+        console.log('API response:', response.data);
+        SetData(response.data.equation); 
+      } catch (error) {
+        console.error('Failed to GETEQUATION', error);
+        Swal.fire({
+          title: "Error",
+          text: "Failed to GETEQUATION",
+          icon: "error"
+        });
+      }
+    }
+
+    fetchData();
+  }, []);
   const Graphical = async (e)=>{
     e.preventDefault()
     try {
@@ -152,20 +177,25 @@ function App() {
   }
   const handleEquationChange = (e) => {
     SetEquation(e.target.value);
+    setInputValue(e.target.value);
   };
+  const handleEquationChange_ADD = (value) => {
+    SetEquation(value)
+    setInputValue(value);
+  }
   const renderForm = () =>{
     switch (method){
       case "Graphical":
         return (
           <form className="flex justify-center my-4" onSubmit={Graphical}>
-          <input  onChange={handleEquationChange} className="p-2 border-solid border-2 focus:outline-none focus:border-rose-600 rounded-md" type="text" placeholder="equation = 43*x-180" />
+          <input value={inputValue} onChange={handleEquationChange} className="p-2 border-solid border-2 focus:outline-none focus:border-rose-600 rounded-md" type="text" placeholder="equation = 43*x-180" />
           <button type="submit" className='ml-8 p-2 bg-green-500 text-white rounded-md hover:bg-green-600'>Calculate</button>
           </form>
         )
       case "FalsePosition":
         return (
           <form className="flex justify-center my-4 flex-col items-center" onSubmit={FalsePosition}>
-          <input  onChange={handleEquationChange} className="p-2 border-solid border-2 focus:outline-none focus:border-rose-600 rounded-md" type="text" placeholder="equation = x^4-13" />
+          <input value={inputValue} onChange={handleEquationChange} className="p-2 border-solid border-2 focus:outline-none focus:border-rose-600 rounded-md" type="text" placeholder="equation = x^4-13" />
           <input onChange={(e)=>{SetXl(e.target.value)}} className="p-2 border-solid border-2 focus:outline-none focus:border-rose-600 rounded-md mt-4 mb-4" placeholder="XL value = 1.5" />
           <input onChange={(e)=>{SetXr(e.target.value)}} className="p-2 border-solid border-2 focus:outline-none focus:border-rose-600 rounded-md mb-4" placeholder="XR value = 2.0" />
           <button type="submit" className='p-2 bg-green-500 text-white rounded-md hover:bg-green-600'>Calculate</button>
@@ -174,7 +204,7 @@ function App() {
       case "Bisection":
         return (
           <form className="flex justify-center my-4 flex-col items-center" onSubmit={Bisection}>
-          <input  onChange={handleEquationChange} className="p-2 border-solid border-2 focus:outline-none focus:border-rose-600 rounded-md" type="text" placeholder="equation = x^4-13" />
+          <input value={inputValue} onChange={handleEquationChange} className="p-2 border-solid border-2 focus:outline-none focus:border-rose-600 rounded-md" type="text" placeholder="equation = x^4-13" />
           <input onChange={(e)=>{SetXl(e.target.value)}} className="p-2 border-solid border-2 focus:outline-none focus:border-rose-600 rounded-md mt-4 mb-4" placeholder="XL value = 1.5" />
           <input onChange={(e)=>{SetXr(e.target.value)}} className="p-2 border-solid border-2 focus:outline-none focus:border-rose-600 rounded-md mb-4" placeholder="XR value = 2.0" />
           <button type="submit" className='p-2 bg-green-500 text-white rounded-md hover:bg-green-600'>Calculate</button>
@@ -183,7 +213,7 @@ function App() {
       case "OnePoint":
         return (
           <form className="flex justify-center my-4 flex-col items-center" onSubmit={OnePoint}>
-          <input  onChange={handleEquationChange} className="p-2 border-solid border-2 focus:outline-none focus:border-rose-600 rounded-md" type="text" placeholder="equation = 0.5-x^3" />
+          <input value={inputValue} onChange={handleEquationChange} className="p-2 border-solid border-2 focus:outline-none focus:border-rose-600 rounded-md" type="text" placeholder="equation = 0.5-x^3" />
           <input onChange={(e)=>{SetGuess(e.target.value)}} className="p-2 border-solid border-2 focus:outline-none focus:border-rose-600 rounded-md mt-4 mb-4" placeholder="Guess value = 1" />
           <button type="submit" className='p-2 bg-green-500 text-white rounded-md hover:bg-green-600'>Calculate</button>
           </form>
@@ -223,6 +253,22 @@ function App() {
         <Calculator  equation={equation}/>
         </div>
       </>}
+      <div className='fixed top-24 right-11 w-80 bg-gray-100 p-5 rounded-md shadow-md'>
+        <h1 className='mb-5 text-center'>EQUATION EXAMPLE</h1>
+        <div className='overflow-y-auto h-80'>
+        {Array.isArray(Data) && Data.map((data, index) => (
+  <div key={index} className='flex bg-gray-200 p-4 rounded-lg justify-around mb-5'>
+    <label>{data.equation}</label>
+    <button
+      onClick={() => handleEquationChange_ADD(data.equation)}
+      className='bg-red-500 text-white pl-5 pr-5 rounded-md'
+    >
+      ADD
+    </button>
+            </div>
+          ))}
+        </div>
+      </div>
     </>
   );
 }
