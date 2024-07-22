@@ -12,6 +12,7 @@ function App() {
   const [Xr , SetXr] = useState("");
   const [answer , SetAnswer] = useState("");
   const [loading , SetLoading] = useState(false);
+  const [guess , SetGuess] = useState("");
   const Graphical = async (e)=>{
     e.preventDefault()
     try {
@@ -118,6 +119,37 @@ function App() {
       });
     }
   };
+  const OnePoint = async (e)=>{
+    e.preventDefault();
+    try{
+      const token = getToken();
+       const apiUrl = `${import.meta.env.VITE_REACT_API_URL}/OnePoint`;
+       const headers = {
+        Authorization: `Bearer ${token}`
+      };
+      const requestData = {
+        equation: equation ,
+        guess : guess
+      };
+      SetLoading(true);
+      const response = await axios.post(apiUrl, requestData, { headers });
+      SetLoading(false);
+      SetAnswer(response.data.result);
+      Swal.fire({
+        title: "Success",
+        text: "Calculation successful!",
+        icon: "success"
+      });
+    }catch(err){
+      console.error('Failed to calculate:', error);
+
+      Swal.fire({
+        title: "Error",
+        text: "Failed to calculate. Please try again.",
+        icon: "error"
+      });
+    }
+  }
   const handleEquationChange = (e) => {
     SetEquation(e.target.value);
   };
@@ -148,6 +180,14 @@ function App() {
           <button type="submit" className='p-2 bg-green-500 text-white rounded-md hover:bg-green-600'>Calculate</button>
           </form>
         )
+      case "OnePoint":
+        return (
+          <form className="flex justify-center my-4 flex-col items-center" onSubmit={OnePoint}>
+          <input  onChange={handleEquationChange} className="p-2 border-solid border-2 focus:outline-none focus:border-rose-600 rounded-md" type="text" placeholder="equation = 0.5-x^3" />
+          <input onChange={(e)=>{SetGuess(e.target.value)}} className="p-2 border-solid border-2 focus:outline-none focus:border-rose-600 rounded-md mt-4 mb-4" placeholder="Guess value = 1" />
+          <button type="submit" className='p-2 bg-green-500 text-white rounded-md hover:bg-green-600'>Calculate</button>
+          </form>
+        )
       }
   }
   return (
@@ -158,6 +198,7 @@ function App() {
           <option value="Graphical">Graphical Method</option>
           <option value="FalsePosition">False Position Method</option>
           <option value="Bisection">Bisection Method</option>
+          <option value="OnePoint">OnePoint Iterration Method</option>
         </select>
       </div>
       {renderForm()}
