@@ -257,16 +257,18 @@ function App() {
         <h1 className='mb-5 text-center'>EQUATION EXAMPLE</h1>
         <div className='overflow-y-auto h-80'>
         {Array.isArray(Data) && Data.map((data, index) => (
-  <div key={index} className='flex bg-gray-200 p-4 rounded-lg justify-around mb-5'>
-    <label>{data.equation}</label>
+  <div key={index} className='flex bg-gray-200 p-4 rounded-lg justify-between items-center mb-5'>
+    <div className='flex-1'>
+      <label className='block truncate'>{data.equation}</label>
+    </div>
     <button
       onClick={() => handleEquationChange_ADD(data.equation)}
-      className='bg-red-500 text-white pl-5 pr-5 rounded-md'
+      className='bg-red-500 text-white pl-5 pr-5 rounded-md hover:bg-red-600'
     >
       ADD
     </button>
-            </div>
-          ))}
+  </div>
+))}
         </div>
       </div>
     </>
