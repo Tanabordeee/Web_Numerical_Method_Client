@@ -11,14 +11,14 @@ const Calculator = ({ equation }) => {
     });
 
     if (equation) {
-      // Clear existing expressions
+
       calculator.setBlank();
 
-      // Add new expression based on equation
+
       calculator.setExpression({ latex: `y=${equation}` });
     }
 
-    // Cleanup on unmount
+
     return () => {
       calculator.destroy();
     };
