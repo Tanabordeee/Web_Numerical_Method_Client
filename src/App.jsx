@@ -280,7 +280,7 @@ function App() {
       ) : (
         <>
           <div className="flex justify-center m-8">
-            <label htmlFor="">คำตอบ : {answer}</label>
+            <label htmlFor="" className='text-5xl'>Answer : {answer}</label>
           </div>
           <div className="flex justify-center my-4">
             <Calculator equation={equation} />

@@ -3,6 +3,11 @@ import Navbar from "./Navbar";
 import { isInteger } from "mathjs";
 import Swal from "sweetalert2";
 import Cramer from "../service/Cramer";
+import GuassElimination from "../service/GaussElimination";
+import GuassJordan from "../service/Guass-Jordan";
+import LU_Decomposition from "../service/LU_Decomposition";
+import MatrixInversion from "../service/MatrixInversion";
+import Cholesky_Decomposition from "../service/Cholesky";
 const LinearAlgebra = () => {
 const [Size, SetSize] = useState(0);
 const [MatrixA, SetMatrixA] = useState([]);
@@ -85,7 +90,126 @@ const Cramer_Calculate = async (e) => {
         });
     }
 };
+const GuassEliminations = async (e) =>{
+    e.preventDefault();
+    try {
+        SetLoading(true);
+        await new Promise(resolve => setTimeout(resolve, 500));
+        let GuassEliminationResult = GuassElimination(MatrixA, MatrixB);
+        SetAnswer(GuassEliminationResult);
+        SetLoading(false);
 
+        Swal.fire({
+            title: "Success",
+            text: "Calculation successful!",
+            icon: "success"
+        });
+
+    } catch (err) {
+        SetLoading(false);
+        Swal.fire({
+            title: "Error",
+            text: "Failed to calculate. Please try again.",
+            icon: "error"
+        });
+    }
+}
+const GuassJordans = async (e) =>{
+    e.preventDefault();
+    try {
+        SetLoading(true);
+        await new Promise(resolve => setTimeout(resolve, 500));
+        let GuassJordanResult = GuassJordan(MatrixA, MatrixB);
+        SetAnswer(GuassJordanResult);
+        SetLoading(false);
+
+        Swal.fire({
+            title: "Success",
+            text: "Calculation successful!",
+            icon: "success"
+        });
+
+    } catch (err) {
+        SetLoading(false);
+        Swal.fire({
+            title: "Error",
+            text: "Failed to calculate. Please try again.",
+            icon: "error"
+        });
+    }
+}
+const Lu_Decompositions = async (e) =>{
+    e.preventDefault();
+    try {
+        SetLoading(true);
+        await new Promise(resolve => setTimeout(resolve, 500));
+        let Lu_Decomposition_Result = LU_Decomposition(MatrixA, MatrixB);
+        SetAnswer(Lu_Decomposition_Result);
+        SetLoading(false);
+
+        Swal.fire({
+            title: "Success",
+            text: "Calculation successful!",
+            icon: "success"
+        });
+
+    } catch (err) {
+        SetLoading(false);
+        Swal.fire({
+            title: "Error",
+            text: "Failed to calculate. Please try again.",
+            icon: "error"
+        });
+    }
+}
+const MatrixInversions = async (e) =>{
+    e.preventDefault();
+    try {
+        SetLoading(true);
+        await new Promise(resolve => setTimeout(resolve, 500));
+        let MatrixInversionResult = MatrixInversion(MatrixA, MatrixB);
+        SetAnswer(MatrixInversionResult);
+        SetLoading(false);
+
+        Swal.fire({
+            title: "Success",
+            text: "Calculation successful!",
+            icon: "success"
+        });
+
+    } catch (err) {
+        SetLoading(false);
+        Swal.fire({
+            title: "Error",
+            text: "Failed to calculate. Please try again.",
+            icon: "error"
+        });
+    }
+}
+const Cholseky =  async (e) =>{
+    e.preventDefault();
+    try {
+        SetLoading(true);
+        await new Promise(resolve => setTimeout(resolve, 500));
+        let CholeskyResult = Cholesky_Decomposition(MatrixA, MatrixB);
+        SetAnswer(CholeskyResult);
+        SetLoading(false);
+
+        Swal.fire({
+            title: "Success",
+            text: "Calculation successful!",
+            icon: "success"
+        });
+
+    } catch (err) {
+        SetLoading(false);
+        Swal.fire({
+            title: "Error",
+            text: "Failed to calculate. Please try again.",
+            icon: "error"
+        });
+    }
+}
 const render = (e)=>{
     switch(Method){
         case "Cramer":
@@ -94,6 +218,36 @@ const render = (e)=>{
                     <button type="submit" className="border p-2 bg-green-500 rounded-md text-white hover:bg-red-500 m-3">CALCULATE</button>
                 </form>
             )
+        case "GuassElimination":
+                return(
+                    <form onSubmit={GuassEliminations}>
+                        <button type="submit" className="border p-2 bg-green-500 rounded-md text-white hover:bg-red-500 m-3">CALCULATE</button>
+                    </form>
+                )
+        case "GuassJordan":
+            return(
+                <form onSubmit={GuassJordans}>
+                    <button type="submit" className="border p-2 bg-green-500 rounded-md text-white hover:bg-red-500 m-3">CALCULATE</button>
+                </form>
+            )
+        case "MatirxInversion":
+                return(
+                    <form onSubmit={MatrixInversions}>
+                        <button type="submit" className="border p-2 bg-green-500 rounded-md text-white hover:bg-red-500 m-3">CALCULATE</button>
+                    </form>
+                )
+        case "Lu_Decomposition":
+                return(
+                        <form onSubmit={Lu_Decompositions}>
+                            <button type="submit" className="border p-2 bg-green-500 rounded-md text-white hover:bg-red-500 m-3">CALCULATE</button>
+                        </form>
+                )
+        case "Cholesky_Decomposition":
+                return(
+                        <form onSubmit={Cholseky}>
+                            <button type="submit" className="border p-2 bg-green-500 rounded-md text-white hover:bg-red-500 m-3">CALCULATE</button>
+                        </form>
+                )
         default :
             return null;
     }
@@ -117,7 +271,7 @@ return (
             </select>
         </div>
         {render()}
-        {Loading ? (<p>CALCULATING ... </p>) : (<p className="text-5xl m-10">คำตอบ : {Answer.length > 0 ? Answer.map((result, index) => (<span key={index}>X{index+1} = {result}  </span>)) : "No result"}</p>)}
+        {Loading ? (<p>CALCULATING ... </p>) : (<p className="text-5xl m-10">Answer : {Answer.length > 0 ? Answer.map((result, index) => (<span key={index}>X{index+1} = {result}  </span>)) : "No result"}</p>)}
         <div className="flex items-center mt-2 justify-center w-[50%]">
             <div className="flex flex-col justify-center items-center">
                 <p className="mb-3 text-4xl">[A]</p>
