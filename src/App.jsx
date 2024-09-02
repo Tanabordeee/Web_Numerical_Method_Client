@@ -287,7 +287,7 @@ function App() {
           </div>
         </>
       )}
-      <div className='fixed top-24 right-11 w-80 bg-gray-100 p-5 rounded-md shadow-md'>
+      <div className=' static w-80 top-auto right-auto mx-auto mb-5 md:fixed md:top-24 md:right-11 w-80 bg-gray-100 p-5 rounded-md shadow-md'>
         <h1 className='mb-5 text-center'>EQUATION EXAMPLE</h1>
         <div className='overflow-y-auto h-80'>
           {Array.isArray(Data) && Data.map((data, index) => (
