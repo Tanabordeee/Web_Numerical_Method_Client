@@ -1,10 +1,12 @@
 import { derivative , abs , evaluate } from "mathjs";
 const NewTonRaphson = ({equation , guess}) => {
-
-    const diff = derivative(equation , 'x');
+    function normalizeEquation(equation) {
+        return equation.replace(/[a-zA-Z]/g, 'x'); // /g เพื่อให้ match หมดไม่ใช่แค่ตัวแรก 
+    }
+    const diff = derivative(normalizeEquation(equation) , 'x');
 
     function calculate(x){
-        let result = evaluate(equation , {x : x});
+        let result = evaluate(normalizeEquation(equation) , {x : x});
         return result;
     }
 

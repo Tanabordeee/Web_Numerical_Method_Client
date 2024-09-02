@@ -1,7 +1,11 @@
 import { evaluate } from "mathjs";
 const Graphical_Method = ({equation}) => {
+
+    function normalizeEquation(equation) {
+        return equation.replace(/[a-zA-Z]/g, 'x'); // /g เพื่อให้ match หมดไม่ใช่แค่ตัวแรก 
+    }
     function calculate(x) {
-        return evaluate(equation , {x : x});
+        return evaluate(normalizeEquation(equation), { x: x });
     }
     function checkfun(x) {
         if(x < 0){
