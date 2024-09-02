@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Calculator from './components/Calculator';
-import axios from 'axios';
 import Swal from "sweetalert2";
 import Graphical_Method from './service/Graphical_Method';
 import Bisection_Method from './service/Bisection_Method';
@@ -15,7 +14,7 @@ function App() {
   const [equation, SetEquation] = useState("");
   const [Xl, SetXl] = useState("");
   const [Xr, SetXr] = useState("");
-  const [answer, SetAnswer] = useState("");
+  const [answer, SetAnswer] = useState("No result");
   const [loading, SetLoading] = useState(false);
   const [guess, SetGuess] = useState("");
   const [guess2, SetGuess2] = useState("");
