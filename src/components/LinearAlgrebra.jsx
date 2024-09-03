@@ -8,6 +8,7 @@ import GuassJordan from "../service/Guass-Jordan";
 import LU_Decomposition from "../service/LU_Decomposition";
 import MatrixInversion from "../service/MatrixInversion";
 import Cholesky_Decomposition from "../service/Cholesky";
+import { round } from "mathjs";
 const LinearAlgebra = () => {
   const [Size, SetSize] = useState(3);
   const [MatrixA, SetMatrixA] = useState([]);
@@ -364,7 +365,7 @@ const LinearAlgebra = () => {
                       <div key={indexres2} className="grid grid-cols-3 gap-2">
                         {res2.map((res3, index3) => (
                           <div key={index3} className="border mb-1 p-2">
-                            {res3}
+                            {round(res3 , 2)}
                           </div>
                         ))}
                       </div>
@@ -389,7 +390,7 @@ const LinearAlgebra = () => {
                         <div key={indexres2} className="grid grid-cols-3 gap-2">
                           {res2.map((res3, index3) => (
                             <div key={index3} className="border mb-1 p-2">
-                              {res3}
+                              {round(res3 , 2)}
                             </div>
                           ))}
                         </div>
@@ -417,7 +418,7 @@ const LinearAlgebra = () => {
                     >
                       {res.map((res2, indexres2) => (
                         <div key={indexres2} className="border mb-1 p-2">
-                          {res2}
+                          {round(res2 , 2)}
                         </div>
                       ))}
                     </div>
@@ -435,7 +436,7 @@ const LinearAlgebra = () => {
           ) : Answer2.length > 0 ? (
             Answer2.map((result, index) => (
               <span className="text-3xl m-1" key={index}>
-                X{index + 1} = {result}
+                X{index + 1} = {round(result , 2)}
               </span>
             ))
           ) : (
@@ -447,7 +448,7 @@ const LinearAlgebra = () => {
           <>
             {Answer.result.map((res, index) => (
               <div className="text-3xl m-1" key={index}>
-                X{index + 1} = {res}{" "}
+                X{index + 1} = {round(res , 2)}{" "}
               </div>
             ))}{" "}
           </>
