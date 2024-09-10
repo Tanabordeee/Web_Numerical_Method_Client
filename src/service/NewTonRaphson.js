@@ -1,5 +1,5 @@
 import { derivative , abs , evaluate } from "mathjs";
-const NewTonRaphson = ({equation , guess}) => {
+const NewTonRaphson = (equation , guess) => {
     function normalizeEquation(equation) {
         return equation.replace(/[a-zA-Z]/g, 'x'); // /g เพื่อให้ match หมดไม่ใช่แค่ตัวแรก 
     }

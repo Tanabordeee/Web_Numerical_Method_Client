@@ -1,5 +1,5 @@
 import { evaluate } from "mathjs";
-const Graphical_Method = ({equation}) => {
+const Graphical_Method = (equation) => {
 
     function normalizeEquation(equation) {
         return equation.replace(/[a-zA-Z]/g, 'x'); // /g เพื่อให้ match หมดไม่ใช่แค่ตัวแรก 

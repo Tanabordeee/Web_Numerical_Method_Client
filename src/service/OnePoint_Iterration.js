@@ -1,5 +1,5 @@
 import { evaluate } from "mathjs";
-const OnePoint_Iterration = ({equation , guess}) =>{
+const OnePoint_Iterration = (equation , guess) =>{
     function normalizeEquation(equation) {
         return equation.replace(/[a-zA-Z]/g, 'x'); // /g เพื่อให้ match หมดไม่ใช่แค่ตัวแรก 
     }

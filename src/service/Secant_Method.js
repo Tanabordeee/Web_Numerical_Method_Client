@@ -1,5 +1,5 @@
 import { abs , evaluate } from "mathjs";
-const Secant_Method = ({equation , guess , guess2}) =>{
+const Secant_Method = (equation , guess , guess2) =>{
     function normalizeEquation(equation) {
         return equation.replace(/[a-zA-Z]/g, 'x'); // /g เพื่อให้ match หมดไม่ใช่แค่ตัวแรก 
     }

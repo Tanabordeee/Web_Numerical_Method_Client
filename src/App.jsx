@@ -43,7 +43,7 @@ function App() {
     try {
       SetLoading(true);
       await new Promise(resolve => setTimeout(resolve, 500));
-      let graphicalResult = <Graphical_Method equation={equation} />;
+      let graphicalResult = Graphical_Method(equation);
       SetAnswer(graphicalResult);
       SetLoading(false);
 
@@ -67,7 +67,7 @@ function App() {
     try {
       SetLoading(true);
       await new Promise(resolve => setTimeout(resolve, 500));
-      let FalsePositionResult = <FalsePosition_Method equation={equation} Xl={Xl} Xr={Xr} />;
+      let FalsePositionResult = FalsePosition_Method(equation , Xl , Xr);
       SetAnswer(FalsePositionResult);
       SetLoading(false);
 
@@ -93,7 +93,7 @@ function App() {
     try {
       SetLoading(true);
       await new Promise(resolve => setTimeout(resolve, 500));
-      let BisectionResult = <Bisection_Method equation={equation} Xl={Xl} Xr={Xr} />;
+      let BisectionResult = Bisection_Method(equation , Xl , Xr);
       SetAnswer(BisectionResult);
       SetLoading(false);
 
@@ -119,7 +119,7 @@ function App() {
     try {
       SetLoading(true);
       await new Promise(resolve => setTimeout(resolve, 500));
-      let OnePointResult = <OnePoint_Iterration equation={equation} guess={guess} />;
+      let OnePointResult = OnePoint_Iterration(equation , guess);
       SetAnswer(OnePointResult);
       SetLoading(false);
 
@@ -145,7 +145,7 @@ function App() {
     try {
       SetLoading(true);
       await new Promise(resolve => setTimeout(resolve, 500));
-      let NewTonRaphsonResult = <NewTonRaphson equation={equation} guess={guess} />;
+      let NewTonRaphsonResult = NewTonRaphson(equation , guess);
       SetAnswer(NewTonRaphsonResult);
       SetLoading(false);
 
@@ -171,7 +171,7 @@ function App() {
     try {
       SetLoading(true);
       await new Promise(resolve => setTimeout(resolve, 500));
-      let SecantResult = <Secant_Method equation={equation} guess={guess} guess2={guess2} />;
+      let SecantResult = Secant_Method(equation , guess ,guess2);
       SetAnswer(SecantResult);
       SetLoading(false);
 
@@ -283,7 +283,7 @@ function App() {
             <label htmlFor="" className='text-5xl'>Answer : {answer}</label>
           </div>
           <div className="flex justify-center my-4">
-            <Calculator equation={equation} />
+            <Calculator equation={equation} point={parseFloat(answer)} />
           </div>
         </>
       )}
