@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-
+import Desmos from 'desmos'
 const Calculator = ({ equation ,point}) => {
   const calculatorRef = useRef(null);
 
