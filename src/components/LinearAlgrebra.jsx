@@ -24,8 +24,8 @@ const LinearAlgebra = () => {
   const [method, setMethod] = useState("Cramer");
   const [answer, setAnswer] = useState({});
   const [answer2, setAnswer2] = useState([]);
+  const [answerConjugate , setAnswerConjugate] = useState({});
   const [loading, setLoading] = useState(false);
-
   // Initialize matrices based on the size
   useEffect(() => {
     if (size > 0 && isInteger(size)) {
@@ -33,10 +33,13 @@ const LinearAlgebra = () => {
         Array(size).fill(0)
       );
       const newMatrixB = Array(size).fill(0);
+      const newMatrixX = Array(size).fill(0);
       setMatrixA(newMatrixA);
       setMatrixB(newMatrixB);
+      setMatrixX(newMatrixX);
       setAnswer({});
       setAnswer2([]);
+      setAnswerConjugate({});
     } else {
       setMatrixA([]);
       setMatrixB([]);
@@ -200,7 +203,7 @@ const LinearAlgebra = () => {
         matrixB,
         matrixX
       );
-      setAnswer2(conjugateResult);
+      setAnswerConjugate(conjugateResult);
       setLoading(false);
       Swal.fire({
         title: "Success",
@@ -211,7 +214,7 @@ const LinearAlgebra = () => {
       setLoading(false);
       Swal.fire({
         title: "Error",
-        text: "Failed to calculate. Please try again.",
+        text: err,
         icon: "error",
       });
     }
@@ -253,6 +256,9 @@ const LinearAlgebra = () => {
           setMatrixA={setMatrixA}
           matrixB={matrixB}
           setMatrixB={setMatrixB}
+          matrixX={matrixX}
+          setMatirX={setMatrixX}
+          method={method}
         />
 
         {/* Solution Display */}
@@ -260,8 +266,11 @@ const LinearAlgebra = () => {
           method={method}
           answer={answer}
           answer2={answer2}
+          conjugateAnswer = {answerConjugate}
           loading={loading}
           size={size}
+          matrixA = {matrixA}
+          matrixB = {matrixB}
         />
       </div>
     </>

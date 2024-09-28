@@ -17,16 +17,17 @@ const ConjugateGradientMethod = (MatrixA , MatrixB , MatrixX) =>{
         lambda = divide(multiply(multiply(-1, D), R), multiply(multiply(transpose(D), A), D));
         result.push({
             iteration: iteration + 1,
-            X: new_x._data,
-            R: R._data,
+            X: new_x,
+            R: R,
             alpha,
-            D: D._data,
+            D: D,
             lambda
         });
         X = new_x
         error = sqrt(multiply(transpose(R), R));
         iteration++;
     }
+    console.log(result);
     return result;
 }
 export default ConjugateGradientMethod;

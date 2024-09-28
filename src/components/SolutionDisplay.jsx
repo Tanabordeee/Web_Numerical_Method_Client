@@ -3,12 +3,12 @@
 import React from "react";
 import { round } from "mathjs";
 
-const SolutionDisplay = ({ method, answer, answer2, loading, size }) => {
+const SolutionDisplay = ({ method, answer, answer2, loading, size , conjugateAnswer , MatrixA , MatrixB}) => {
   // Determine if the method uses Answer or Answer2
   const usesAnswer2 =
     method === "LU_Decomposition" ||
-    method === "Cholesky_Decomposition" ||
-    method === "ConjugateGradientMethod";
+    method === "Cholesky_Decomposition";
+  const useConjugateAnswer = method === "ConjugateGradientMethod";
 
   return (
     <>
@@ -27,6 +27,53 @@ const SolutionDisplay = ({ method, answer, answer2, loading, size }) => {
         ) : (
           <p className="text-3xl m-1">Answer: No results available</p>
         )
+      ) : useConjugateAnswer ? (
+        loading ? (
+          <p className="text-2xl m-1">CALCULATING ... </p>
+        ) : 
+        <div className="flex flex-col w-full">
+  <div className="bg-slate-200 w-full p-4">
+    <table className="table-auto border-separate border-spacing-2 w-full">
+      <thead>
+        <tr className="bg-grey text-zinc-950 ">
+          <th className="p-5 border border-black ">Iteration</th>
+          <th className="p-5 border border-black">X</th>
+          <th className="p-5 border border-black">R</th>
+          <th className="p-5 border border-black">Alpha</th>
+          <th className="p-5 border border-black">D</th>
+        </tr>
+      </thead>
+      <tbody className="bg-lightgrey text-center">
+      {conjugateAnswer.length > 0 ? (
+  conjugateAnswer.map((res, index) => (
+    <tr key={index}>
+      <td className="p-5 border border-black">{res.iteration}</td>
+      <td className="p-5 border border-black">
+        {res.X.map((value, i) => (
+          <div className="flex flex-col" key={i}>X {i + 1} : {round(value, 9)}</div>
+        ))}
+      </td>
+      <td className="p-5 border border-black">
+        {res.R.map((value, i) => (
+          <div className="flex flex-col" key={i}>R {i + 1} : {round(value, 9)}</div>
+        ))}
+      </td>
+      <td className="p-5 border border-black">{res.alpha}</td>
+      <td className="p-5 border border-black">
+        {res.D.map((value, i) => (
+          <div className="flex flex-col" key={i}>D {i + 1} : {round(value, 9)}</div>
+        ))}
+      </td>
+    </tr>
+  ))
+) : (
+  <p></p>
+)}
+          {/* <td className="p-5 border border-black">1</td> */}
+      </tbody>
+    </table>
+  </div>
+</div>
       ) : (
         <>
           {loading ? (
