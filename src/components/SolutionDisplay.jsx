@@ -3,11 +3,19 @@
 import React from "react";
 import { round } from "mathjs";
 
-const SolutionDisplay = ({ method, answer, answer2, loading, size , conjugateAnswer , MatrixA , MatrixB}) => {
+const SolutionDisplay = ({
+  method,
+  answer,
+  answer2,
+  loading,
+  size,
+  conjugateAnswer,
+  MatrixA,
+  MatrixB,
+}) => {
   // Determine if the method uses Answer or Answer2
   const usesAnswer2 =
-    method === "LU_Decomposition" ||
-    method === "Cholesky_Decomposition";
+    method === "LU_Decomposition" || method === "Cholesky_Decomposition";
   const useConjugateAnswer = method === "ConjugateGradientMethod";
 
   return (
@@ -30,50 +38,58 @@ const SolutionDisplay = ({ method, answer, answer2, loading, size , conjugateAns
       ) : useConjugateAnswer ? (
         loading ? (
           <p className="text-2xl m-1">CALCULATING ... </p>
-        ) : 
-        <div className="flex flex-col w-full">
-  <div className="bg-slate-200 w-full p-4">
-    <table className="table-auto border-separate border-spacing-2 w-full">
-      <thead>
-        <tr className="bg-grey text-zinc-950 ">
-          <th className="p-5 border border-black ">Iteration</th>
-          <th className="p-5 border border-black">X</th>
-          <th className="p-5 border border-black">R</th>
-          <th className="p-5 border border-black">Alpha</th>
-          <th className="p-5 border border-black">D</th>
-        </tr>
-      </thead>
-      <tbody className="bg-lightgrey text-center">
-      {conjugateAnswer.length > 0 ? (
-  conjugateAnswer.map((res, index) => (
-    <tr key={index}>
-      <td className="p-5 border border-black">{res.iteration}</td>
-      <td className="p-5 border border-black">
-        {res.X.map((value, i) => (
-          <div className="flex flex-col" key={i}>X {i + 1} : {round(value, 9)}</div>
-        ))}
-      </td>
-      <td className="p-5 border border-black">
-        {res.R.map((value, i) => (
-          <div className="flex flex-col" key={i}>R {i + 1} : {round(value, 9)}</div>
-        ))}
-      </td>
-      <td className="p-5 border border-black">{res.alpha}</td>
-      <td className="p-5 border border-black">
-        {res.D.map((value, i) => (
-          <div className="flex flex-col" key={i}>D {i + 1} : {round(value, 9)}</div>
-        ))}
-      </td>
-    </tr>
-  ))
-) : (
-  <p></p>
-)}
-          {/* <td className="p-5 border border-black">1</td> */}
-      </tbody>
-    </table>
-  </div>
-</div>
+        ) : (
+          <div className="flex flex-col w-full">
+            <div className="bg-slate-200 w-full p-4">
+              <table className="table-auto border-separate border-spacing-2 w-full">
+                <thead>
+                  <tr className="bg-grey text-zinc-950 ">
+                    <th className="p-5 border border-black ">Iteration</th>
+                    <th className="p-5 border border-black">X</th>
+                    <th className="p-5 border border-black">R</th>
+                    <th className="p-5 border border-black">Alpha</th>
+                    <th className="p-5 border border-black">D</th>
+                  </tr>
+                </thead>
+                <tbody className="bg-lightgrey text-center">
+                  {conjugateAnswer.length > 0 ? (
+                    conjugateAnswer.map((res, index) => (
+                      <tr key={index}>
+                        <td className={`p-5 border border-black ${index === conjugateAnswer.length - 1 ? "text-red-500":""}`}>
+                          {res.iteration}
+                        </td>
+                        <td className="p-5 border border-black">
+                          {res.X.map((value, i) => (
+                            <div className={`flex flex-col ${index === conjugateAnswer.length - 1 ? "text-red-500":""}`} key={i}>
+                              X {i + 1} : {round(value, 9)}
+                            </div>
+                          ))}
+                        </td>
+                        <td className="p-5 border border-black">
+                          {res.R.map((value, i) => (
+                            <div className={`flex flex-col ${index === conjugateAnswer.length - 1 ? "text-red-500":""}`} key={i}>
+                              R {i + 1} : {round(value, 9)}
+                            </div>
+                          ))}
+                        </td>
+                        <td className={`p-5 border border-black ${index === conjugateAnswer.length - 1 ? "text-red-500":""}`}>{res.alpha}</td>
+                        <td className="p-5 border border-black">
+                          {res.D.map((value, i) => (
+                            <div className={`flex flex-col ${index === conjugateAnswer.length - 1 ? "text-red-500":""}`} key={i}>
+                              D {i + 1} : {round(value, 9)}
+                            </div>
+                          ))}
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <p></p>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )
       ) : (
         <>
           {loading ? (
@@ -98,10 +114,7 @@ const SolutionDisplay = ({ method, answer, answer2, loading, size , conjugateAns
                                 className="grid grid-cols-3 gap-2"
                               >
                                 {res2.map((res3, index3) => (
-                                  <div
-                                    key={index3}
-                                    className="border mb-1 p-2"
-                                  >
+                                  <div key={index3} className="border mb-1 p-2">
                                     {round(res3, 2)}
                                   </div>
                                 ))}
@@ -143,9 +156,7 @@ const SolutionDisplay = ({ method, answer, answer2, loading, size , conjugateAns
                             ))}
                           </div>
                         ) : (
-                          <p className="text-2xl m-1">
-                            No Inversion Available
-                          </p>
+                          <p className="text-2xl m-1">No Inversion Available</p>
                         )}
                       </div>
                     )}
@@ -162,10 +173,7 @@ const SolutionDisplay = ({ method, answer, answer2, loading, size , conjugateAns
                               className="grid grid-rows-3 border p-5 mb-2"
                             >
                               {res.map((res2, index2) => (
-                                <div
-                                  key={index2}
-                                  className="border mb-1 p-2"
-                                >
+                                <div key={index2} className="border mb-1 p-2">
                                   {round(res2, 2)}
                                 </div>
                               ))}
@@ -174,17 +182,20 @@ const SolutionDisplay = ({ method, answer, answer2, loading, size , conjugateAns
                         </div>
                       </div>
                     ) : (
-                        <>
-                      {method == "Cramer" || method == "MatrixInversion" ? (
                       <>
-                      <p className="text-2xl m-1 hidden">
-                        Calculation B: No results available
-                      </p>
-                      </>):(<>
-                        <p className="text-2xl m-1">
-                        Calculation B: No results available
-                      </p>
-                      </>)}
+                        {method == "Cramer" || method == "MatrixInversion" ? (
+                          <>
+                            <p className="text-2xl m-1 hidden">
+                              Calculation B: No results available
+                            </p>
+                          </>
+                        ) : (
+                          <>
+                            <p className="text-2xl m-1">
+                              Calculation B: No results available
+                            </p>
+                          </>
+                        )}
                       </>
                     )}
                   </div>
