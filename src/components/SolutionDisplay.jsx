@@ -12,6 +12,7 @@ const SolutionDisplay = ({
   conjugateAnswer,
   MatrixA,
   MatrixB,
+  solution2,
 }) => {
   // Determine if the method uses Answer or Answer2
   const usesAnswer2 =
@@ -24,11 +25,52 @@ const SolutionDisplay = ({
       {usesAnswer2 ? (
         loading ? (
           <p className="text-2xl m-1">CALCULATING ... </p>
-        ) : answer2.length > 0 ? (
+        ) : answer2.length > 0 &&
+          solution2?.L?.length > 0 &&
+          solution2?.U?.length > 0 ? (
           <div className="flex flex-col items-center mt-4">
+            {/* Display L matrix */}
+            <div className="mb-4">
+              <p className="text-xl font-bold text-center">[L]</p>
+              <div
+                className={`grid grid-cols-${solution2.L[0].length} gap-2`} // Adjusts number of columns dynamically
+              >
+                {solution2.L.flatMap((rowL, rowIndex) =>
+                  rowL.map((colL, colIndex) => (
+                    <span
+                      key={`${rowIndex}-${colIndex}`}
+                      className="p-6 mb-2 border border-gray-300 text-center"
+                    >
+                      {round(colL, 2)}
+                    </span>
+                  ))
+                )}
+              </div>
+            </div>
+
+            {/* Display U matrix */}
+            <div className="mb-4">
+              <p className="text-xl font-bold text-center">[U]</p>
+              <div
+                className={`grid grid-cols-${solution2.U[0].length} gap-2`} // Adjusts number of columns dynamically
+              >
+                {solution2.U.flatMap((rowU, rowIndex) =>
+                  rowU.map((colU, colIndex) => (
+                    <span
+                      key={`${rowIndex}-${colIndex}`}
+                      className="p-6 mb-2 border border-gray-300 text-center"
+                    >
+                      {round(colU, 2)}
+                    </span>
+                  ))
+                )}
+              </div>
+            </div>
+
+            {/* Display X solution */}
             {answer2.map((result, index) => (
               <span className="text-3xl m-1" key={index}>
-                X{index + 1} = {round(result, 2)}
+                X{index + 1} = {round(result, 2)} {/* Displaying solution X */}
               </span>
             ))}
           </div>
@@ -55,27 +97,62 @@ const SolutionDisplay = ({
                   {conjugateAnswer.length > 0 ? (
                     conjugateAnswer.map((res, index) => (
                       <tr key={index}>
-                        <td className={`p-5 border border-black ${index === conjugateAnswer.length - 1 ? "text-red-500":""}`}>
+                        <td
+                          className={`p-5 border border-black ${
+                            index === conjugateAnswer.length - 1
+                              ? "text-red-500"
+                              : ""
+                          }`}
+                        >
                           {res.iteration}
                         </td>
                         <td className="p-5 border border-black">
                           {res.X.map((value, i) => (
-                            <div className={`flex flex-col ${index === conjugateAnswer.length - 1 ? "text-red-500":""}`} key={i}>
+                            <div
+                              className={`flex flex-col ${
+                                index === conjugateAnswer.length - 1
+                                  ? "text-red-500"
+                                  : ""
+                              }`}
+                              key={i}
+                            >
                               X {i + 1} : {round(value, 9)}
                             </div>
                           ))}
                         </td>
                         <td className="p-5 border border-black">
                           {res.R.map((value, i) => (
-                            <div className={`flex flex-col ${index === conjugateAnswer.length - 1 ? "text-red-500":""}`} key={i}>
+                            <div
+                              className={`flex flex-col ${
+                                index === conjugateAnswer.length - 1
+                                  ? "text-red-500"
+                                  : ""
+                              }`}
+                              key={i}
+                            >
                               R {i + 1} : {round(value, 9)}
                             </div>
                           ))}
                         </td>
-                        <td className={`p-5 border border-black ${index === conjugateAnswer.length - 1 ? "text-red-500":""}`}>{res.alpha}</td>
+                        <td
+                          className={`p-5 border border-black ${
+                            index === conjugateAnswer.length - 1
+                              ? "text-red-500"
+                              : ""
+                          }`}
+                        >
+                          {res.alpha}
+                        </td>
                         <td className="p-5 border border-black">
                           {res.D.map((value, i) => (
-                            <div className={`flex flex-col ${index === conjugateAnswer.length - 1 ? "text-red-500":""}`} key={i}>
+                            <div
+                              className={`flex flex-col ${
+                                index === conjugateAnswer.length - 1
+                                  ? "text-red-500"
+                                  : ""
+                              }`}
+                              key={i}
+                            >
                               D {i + 1} : {round(value, 9)}
                             </div>
                           ))}

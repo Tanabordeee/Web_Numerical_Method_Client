@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Navbar from "./Navbar";
-import { isInteger, round } from "mathjs";
+import { isInteger, resolve, round } from "mathjs";
 import Swal from "sweetalert2";
 import Cramer from "../service/Cramer";
 import GaussElimination from "../service/GaussElimination";
@@ -16,6 +16,7 @@ import MethodSelector from "./MethodSelector";
 import CalculationButton from "./CalculationButton";
 import SolutionDisplay from "./SolutionDisplay";
 import SizeInput from "./SizeInput";
+import GuassSeidel from "../service/GuassSeidel";
 const LinearAlgebra = () => {
   const [size, setSize] = useState(3);
   const [matrixA, setMatrixA] = useState([]);
@@ -24,7 +25,9 @@ const LinearAlgebra = () => {
   const [method, setMethod] = useState("Cramer");
   const [answer, setAnswer] = useState({});
   const [answer2, setAnswer2] = useState([]);
-  const [answerConjugate , setAnswerConjugate] = useState({});
+  const [solution2 , setSolution2] = useState({});
+  const [answerConjugate, setAnswerConjugate] = useState({});
+  const [answerGuassSeidel , setAnswerGuassSeidel] = useState({});
   const [loading, setLoading] = useState(false);
   // Initialize matrices based on the size
   useEffect(() => {
@@ -127,7 +130,8 @@ const LinearAlgebra = () => {
       setLoading(true);
       await new Promise((resolve) => setTimeout(resolve, 500));
       const luResult = LU_Decomposition(matrixA, matrixB);
-      setAnswer2(luResult);
+      setAnswer2(luResult.resultX);
+      setSolution2(luResult.solution);
       setLoading(false);
 
       Swal.fire({
@@ -220,6 +224,28 @@ const LinearAlgebra = () => {
     }
   };
 
+  const GuassSeidels = async (e) =>{
+    e.preventDefault();
+    try{
+      setLoading(true);
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      const GuassSeidelResult = GuassSeidel(matrixA , matrixB , matrixX);
+      setAnswerGuassSeidel(GuassSeidelResult);
+      setLoading(false);
+      Swal.fire({
+        title: "Success",
+        text: "Calculation successful!",
+        icon: "success",
+      });
+    }catch(err){
+      setLoading(false);
+      Swal.fire({
+        title: "Error",
+        text: err,
+        icon: "error",
+      });
+    }
+  }
   // Mapping methods to their corresponding calculation functions
   const methodCalculationMap = {
     Cramer: Cramer_Calculate,
@@ -229,9 +255,9 @@ const LinearAlgebra = () => {
     LU_Decomposition: Lu_Decompositions,
     Cholesky_Decomposition: Cholseky,
     ConjugateGradientMethod: ConjugateGradientMethods,
+    GuassSeidel: GuassSeidels
     // Add other methods here if needed
   };
-
 
   return (
     <>
@@ -266,11 +292,12 @@ const LinearAlgebra = () => {
           method={method}
           answer={answer}
           answer2={answer2}
-          conjugateAnswer = {answerConjugate}
+          solution2={solution2}
+          conjugateAnswer={answerConjugate}
           loading={loading}
           size={size}
-          matrixA = {matrixA}
-          matrixB = {matrixB}
+          matrixA={matrixA}
+          matrixB={matrixB}
         />
       </div>
     </>
