@@ -1,23 +1,22 @@
-import React, { useEffect, useRef } from 'react';
-import Desmos from 'desmos'
-const Calculator = ({ equation ,point}) => {
+import React, { useEffect, useRef } from "react";
+import Desmos from "desmos";
+const Calculator = ({ equation, point }) => {
   const calculatorRef = useRef(null);
 
   useEffect(() => {
     const elt = calculatorRef.current;
     const calculator = Desmos.GraphingCalculator(elt, {
       keypad: false,
-      expressions: false
+      expressions: false,
     });
-    console.log(point)
+    console.log(point);
     if (equation) {
       calculator.setBlank();
-
 
       calculator.setExpression({ latex: `y=${equation}` });
     }
     if (point && !isNaN(point)) {
-      console.log('Point:', point);
+      console.log("Point:", point);
       calculator.setExpression({
         latex: `(${point}, 0)`,
         pointStyle: Desmos.Styles.POINT,
@@ -28,9 +27,11 @@ const Calculator = ({ equation ,point}) => {
     return () => {
       calculator.destroy();
     };
-  }, [equation , point]);
+  }, [equation, point]);
 
-  return <div ref={calculatorRef} style={{ width: '600px', height: '400px' }}></div>;
+  return (
+    <div ref={calculatorRef} style={{ width: "600px", height: "400px" }}></div>
+  );
 };
 
 export default Calculator;

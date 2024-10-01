@@ -17,7 +17,7 @@ const LU_Decomposition = (MatrixA , MatrixB) => {
             }
         }
     }
-
+    let solution = {L , U};
     let Y = []
     for(let i = 0 ; i < A.length ; i++){
         Y[i] = B[i];
@@ -35,6 +35,6 @@ const LU_Decomposition = (MatrixA , MatrixB) => {
         }
         resultX[i] /= U[i][i];
     }
-    return resultX;
+    return {resultX , solution};
 }
 export default LU_Decomposition;

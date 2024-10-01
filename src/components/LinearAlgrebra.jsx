@@ -172,14 +172,14 @@ const LinearAlgebra = () => {
       });
     }
   };
-
   const Cholseky = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
       await new Promise((resolve) => setTimeout(resolve, 500));
       const choleskyResult = Cholesky_Decomposition(matrixA, matrixB);
-      setAnswer2(choleskyResult);
+      setAnswer2(choleskyResult?.resultX);
+      setSolution2(choleskyResult.solution);
       setLoading(false);
 
       Swal.fire({
@@ -191,7 +191,7 @@ const LinearAlgebra = () => {
       setLoading(false);
       Swal.fire({
         title: "Error",
-        text: "Failed to calculate. Please try again.",
+        text: err,
         icon: "error",
       });
     }
