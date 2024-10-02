@@ -2,7 +2,7 @@
 
 import React from "react";
 import { round } from "mathjs";
-
+import GaussSeidelDisplay from "./GuassSeidelDisplay";
 const SolutionDisplay = ({
   method,
   answer,
@@ -13,12 +13,14 @@ const SolutionDisplay = ({
   MatrixA,
   MatrixB,
   solution2,
+  GuassSeidelSolution,
+  answerGuassSeidel
 }) => {
   // Determine if the method uses Answer or Answer2
   const usesAnswer2 =
     method === "LU_Decomposition" || method === "Cholesky_Decomposition";
   const useConjugateAnswer = method === "ConjugateGradientMethod";
-
+  const usesGaussSeidel = method === "GaussSeidel";
   return (
     <>
       {/* Conditional Rendering based on Method */}
@@ -186,6 +188,12 @@ const SolutionDisplay = ({
               </table>
             </div>
           </div>
+        )
+      ) : usesGaussSeidel ? ( 
+        loading ? (
+          <p className="text-2xl m-1">CALCULATING ... </p>
+        ) : (
+          <GaussSeidelDisplay result={answerGuassSeidel} solution={GuassSeidelSolution} />
         )
       ) : (
         <>

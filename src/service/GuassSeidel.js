@@ -1,5 +1,5 @@
 import {abs} from "mathjs";
-const GuassSeidel = ({MatrixA , MatrixB , MatrixX}) =>{
+const GaussSeidel = (MatrixA , MatrixB , MatrixX) =>{
     let A = MatrixA
     let B = MatrixB
     let x = [...MatrixX]; 
@@ -18,7 +18,6 @@ const GuassSeidel = ({MatrixA , MatrixB , MatrixX}) =>{
                 }       
             }
             x[j] = (B[j] - sum) / A[j][j];
-
             solution.push({
                 findX: [{ B: B[j], Amain: A[j][j] , sum:sum}]
               });
@@ -37,10 +36,9 @@ const GuassSeidel = ({MatrixA , MatrixB , MatrixX}) =>{
                     index:index,
                     val:val
                 })
-                console.log("iteration "+ count + " X index : "+index + " = " + val)
             });
         }
     }
-    return result;
+    return {result , solution};
 }
-export default GuassSeidel;
+export default GaussSeidel;
