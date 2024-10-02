@@ -25,9 +25,7 @@ const SolutionDisplay = ({
       {usesAnswer2 ? (
         loading ? (
           <p className="text-2xl m-1">CALCULATING ... </p>
-        ) : answer2.length > 0 &&
-          solution2?.L?.length > 0 &&
-          solution2?.U?.length > 0 ? (
+        ) : answer2.length > 0 && solution2?.L?.length > 0 ? (
           <div className="flex flex-col items-center mt-4">
             {/* Display L matrix */}
             <div className="mb-4">
@@ -47,24 +45,46 @@ const SolutionDisplay = ({
                 )}
               </div>
             </div>
-
-            {/* Display U matrix */}
             <div className="mb-4">
-              <p className="text-xl font-bold text-center">[U]</p>
-              <div
-                className={`grid grid-cols-${solution2.U[0].length} gap-2`} // Adjusts number of columns dynamically
-              >
-                {solution2.U.flatMap((rowU, rowIndex) =>
-                  rowU.map((colU, colIndex) => (
-                    <span
-                      key={`${rowIndex}-${colIndex}`}
-                      className="p-6 mb-2 border border-gray-300 text-center"
-                    >
-                      {round(colU, 2)}
-                    </span>
-                  ))
-                )}
-              </div>
+              {solution2?.U?.length > 0 ? (
+                <>
+                  <p className="text-xl font-bold text-center">[U]</p>
+                  <div
+                    className={`grid grid-cols-${solution2.U[0].length} gap-2`} // Adjusts number of columns dynamically
+                  >
+                    {solution2.U.flatMap((rowU, rowIndex) =>
+                      rowU.map((colU, colIndex) => (
+                        <span
+                          key={`${rowIndex}-${colIndex}`}
+                          className="p-6 mb-2 border border-gray-300 text-center"
+                        >
+                          {round(colU, 2)}
+                        </span>
+                      ))
+                    )}
+                  </div>
+                </>
+              ) : solution2?.L_transpose?.length > 0 ? (
+                <>
+                  <p className="text-xl font-bold text-center">[L_transpose]</p>
+                  <div
+                    className={`grid grid-cols-${solution2.L_transpose[0].length} gap-2`}
+                  >
+                    {solution2.L_transpose.flatMap((rowU, rowIndex) =>
+                      rowU.map((colU, colIndex) => (
+                        <span
+                          key={`${rowIndex}-${colIndex}`}
+                          className="p-6 mb-2 border border-gray-300 text-center"
+                        >
+                          {round(colU, 2)}
+                        </span>
+                      ))
+                    )}
+                  </div>
+                </>
+              ) : (
+                <></>
+              )}
             </div>
 
             {/* Display X solution */}
