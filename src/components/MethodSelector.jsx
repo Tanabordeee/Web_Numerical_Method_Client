@@ -20,7 +20,7 @@ const MethodSelector = ({ method, setMethod }) => {
         </option>
         <option value="ConjugateGradientMethod">Conjugate Gradient Method</option>
         <option value="GaussSeidel">Gauss-Seidel Method</option>
-        <option value="JacobiMethod">Jacobi Method</option>
+        <option value="jacobiMethods">Jacobi Method</option>
       </select>
     </div>
   );

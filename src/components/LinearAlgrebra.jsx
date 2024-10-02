@@ -17,6 +17,7 @@ import CalculationButton from "./CalculationButton";
 import SolutionDisplay from "./SolutionDisplay";
 import SizeInput from "./SizeInput";
 import GaussSeidel from "../service/GuassSeidel";
+import jacobiMethod from "../service/JacobiMethod";
 const LinearAlgebra = () => {
   const [size, setSize] = useState(3);
   const [matrixA, setMatrixA] = useState([]);
@@ -29,6 +30,8 @@ const LinearAlgebra = () => {
   const [answerConjugate, setAnswerConjugate] = useState({});
   const [answerGuassSeidel , setAnswerGuassSeidel] = useState({});
   const [GuassSeidelSolution, setGuassSeidelSolution] = useState({});
+  const [answerjacobi , setAnswerjacobi] = useState({});
+  const [jacobiSolution, setjacobiSolution] = useState({});
   const [loading, setLoading] = useState(false);
   // Initialize matrices based on the size
   useEffect(() => {
@@ -45,6 +48,7 @@ const LinearAlgebra = () => {
       setAnswer2([]);
       setAnswerConjugate({});
       setAnswerGuassSeidel({});
+      setAnswerjacobi({})
     } else {
       setMatrixA([]);
       setMatrixB([]);
@@ -52,6 +56,7 @@ const LinearAlgebra = () => {
       setAnswer2([]);
       setAnswerConjugate({});
       setAnswerGuassSeidel({});
+      setAnswerjacobi({})
     }
   }, [size]);
   // Calculation Functions
@@ -252,6 +257,30 @@ const LinearAlgebra = () => {
     }
   };
 
+  const Jacobi = async (e) => {
+    e.preventDefault();
+    try {
+        setLoading(true);
+        await new Promise((resolve) => setTimeout(resolve, 500));
+        const JacobiResult = jacobiMethod(matrixA, matrixB, matrixX);
+        console.log(JacobiResult.result);
+        setAnswerjacobi(JacobiResult.result);
+        setjacobiSolution(JacobiResult.solution);
+        setLoading(false);
+        Swal.fire({
+            title: "Success",
+            text: "Calculation successful!",
+            icon: "success",
+        });
+    } catch (err) {
+        setLoading(false);
+        Swal.fire({
+            title: "Error",
+            text: err.message,
+            icon: "error",
+        });
+    }
+};
   // Mapping methods to their corresponding calculation functions
   const methodCalculationMap = {
     Cramer: Cramer_Calculate,
@@ -261,7 +290,8 @@ const LinearAlgebra = () => {
     LU_Decomposition: Lu_Decompositions,
     Cholesky_Decomposition: Cholseky,
     ConjugateGradientMethod: ConjugateGradientMethods,
-    GaussSeidel: GaussSeidels // corrected spelling here
+    GaussSeidel: GaussSeidels,
+    jacobiMethods:Jacobi
   };
 
   return (
@@ -305,6 +335,8 @@ const LinearAlgebra = () => {
           matrixB={matrixB}
           GuassSeidelSolution = {GuassSeidelSolution}
           answerGuassSeidel = {answerGuassSeidel}
+          JacobiSolution = {jacobiSolution}
+          answerJacobi = {answerjacobi}
         />
       </div>
     </>

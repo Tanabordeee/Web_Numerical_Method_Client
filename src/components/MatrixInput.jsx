@@ -133,7 +133,7 @@ const MatrixInput = ({
         </div>
       </div>
 
-      {(method === "ConjugateGradientMethod" || method === "GaussSeidel") &&(
+      {(method === "ConjugateGradientMethod" || method === "GaussSeidel" || method === "jacobiMethods") &&(
         <div className="flex flex-col justify-center items-center text-center h-[100%]">
           <p>[X]</p>
           <div className="p-4 rounded-lg flex gap-2">{renderMatrixX()}</div>

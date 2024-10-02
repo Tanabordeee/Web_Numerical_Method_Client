@@ -3,6 +3,7 @@
 import React from "react";
 import { round } from "mathjs";
 import GaussSeidelDisplay from "./GuassSeidelDisplay";
+import JacobiDisplay from "./JacobiDisplay";
 const SolutionDisplay = ({
   method,
   answer,
@@ -14,13 +15,16 @@ const SolutionDisplay = ({
   MatrixB,
   solution2,
   GuassSeidelSolution,
-  answerGuassSeidel
+  answerGuassSeidel,
+  JacobiSolution,
+  answerJacobi
 }) => {
   // Determine if the method uses Answer or Answer2
   const usesAnswer2 =
     method === "LU_Decomposition" || method === "Cholesky_Decomposition";
   const useConjugateAnswer = method === "ConjugateGradientMethod";
   const usesGaussSeidel = method === "GaussSeidel";
+  const useJacobi = method === "jacobiMethods";
   return (
     <>
       {/* Conditional Rendering based on Method */}
@@ -195,7 +199,13 @@ const SolutionDisplay = ({
         ) : (
           <GaussSeidelDisplay result={answerGuassSeidel} solution={GuassSeidelSolution} />
         )
-      ) : (
+      ) : useJacobi ? (
+          loading ? (
+            <p className="text-2xl m-1">CALCULATING ... </p>
+          ) : (
+            <JacobiDisplay result={answerJacobi} solution={JacobiSolution} />
+          )
+      ):(
         <>
           {loading ? (
             <p className="text-2xl m-1">CALCULATING ... </p>
