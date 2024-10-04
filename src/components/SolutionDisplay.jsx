@@ -1,10 +1,10 @@
-// src/components/SolutionDisplay.js
-
-import React from "react";
+import React, { useState } from "react";
 import { round } from "mathjs";
 import GaussSeidelDisplay from "./GuassSeidelDisplay";
 import JacobiDisplay from "./JacobiDisplay";
 import ConjugateDisplay from "./ConjugateDisplay";
+import ConjugateGraph from "./ConjugateGraph";
+
 const SolutionDisplay = ({
   method,
   answer,
@@ -12,23 +12,28 @@ const SolutionDisplay = ({
   loading,
   size,
   conjugateAnswer,
-  MatrixA,
-  MatrixB,
+  matrixA,
+  matrixB,
   solution2,
   GuassSeidelSolution,
   answerGuassSeidel,
   JacobiSolution,
   answerJacobi,
 }) => {
-  // Determine if the method uses Answer or Answer2
+  const [viewType, setViewType] = useState("2D");
+
+  const toggleViewType = () => {
+    setViewType(viewType === "2D" ? "3D" : "2D");
+  };
+
   const usesAnswer2 =
     method === "LU_Decomposition" || method === "Cholesky_Decomposition";
   const useConjugateAnswer = method === "ConjugateGradientMethod";
   const usesGaussSeidel = method === "GaussSeidel";
   const useJacobi = method === "jacobiMethods";
+
   return (
     <>
-      {/* Conditional Rendering based on Method */}
       {usesAnswer2 ? (
         loading ? (
           <p className="text-2xl m-1">CALCULATING ... </p>
@@ -37,9 +42,7 @@ const SolutionDisplay = ({
             {/* Display L matrix */}
             <div className="mb-4">
               <p className="text-xl font-bold text-center">[L]</p>
-              <div
-                className={`grid grid-cols-${solution2.L[0].length} gap-2`} // Adjusts number of columns dynamically
-              >
+              <div className={`grid grid-cols-${solution2.L[0].length} gap-2`}>
                 {solution2.L.flatMap((rowL, rowIndex) =>
                   rowL.map((colL, colIndex) => (
                     <span
@@ -56,9 +59,7 @@ const SolutionDisplay = ({
               {solution2?.U?.length > 0 ? (
                 <>
                   <p className="text-xl font-bold text-center">[U]</p>
-                  <div
-                    className={`grid grid-cols-${solution2.U[0].length} gap-2`} // Adjusts number of columns dynamically
-                  >
+                  <div className={`grid grid-cols-${solution2.U[0].length} gap-2`}>
                     {solution2.U.flatMap((rowU, rowIndex) =>
                       rowU.map((colU, colIndex) => (
                         <span
@@ -74,9 +75,7 @@ const SolutionDisplay = ({
               ) : solution2?.L_transpose?.length > 0 ? (
                 <>
                   <p className="text-xl font-bold text-center">[L_transpose]</p>
-                  <div
-                    className={`grid grid-cols-${solution2.L_transpose[0].length} gap-2`}
-                  >
+                  <div className={`grid grid-cols-${solution2.L_transpose[0].length} gap-2`}>
                     {solution2.L_transpose.flatMap((rowU, rowIndex) =>
                       rowU.map((colU, colIndex) => (
                         <span
@@ -97,7 +96,7 @@ const SolutionDisplay = ({
             {/* Display X solution */}
             {answer2.map((result, index) => (
               <span className="text-3xl m-1" key={index}>
-                X{index + 1} = {round(result, 2)} {/* Displaying solution X */}
+                X{index + 1} = {round(result, 2)}
               </span>
             ))}
           </div>
@@ -108,7 +107,17 @@ const SolutionDisplay = ({
         loading ? (
           <p className="text-2xl m-1">CALCULATING ... </p>
         ) : (
-          <ConjugateDisplay conjugateAnswer={conjugateAnswer}/>
+          <>
+            <button onClick={toggleViewType} className="mb-4 p-2 bg-blue-500 text-white rounded">
+              Toggle View: {viewType}
+            </button>
+            <ConjugateGraph
+              data={{ matrixA: matrixA, arrB: matrixB }}
+              result={conjugateAnswer}
+              type={viewType}
+            />
+            <ConjugateDisplay conjugateAnswer={conjugateAnswer} />
+          </>
         )
       ) : usesGaussSeidel ? (
         loading ? (
