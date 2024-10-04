@@ -12,7 +12,7 @@ const Bisection_Method = (equation , Xl ,Xr) => {
     let XRight = parseFloat(Xr);
     let Xm, funcXm, funcXright;
     let check;
-
+    let solution = []; 
     while (true) {
         Xm = (XLeft + XRight) / 2;
         funcXm = calculate(Xm);
@@ -34,8 +34,9 @@ const Bisection_Method = (equation , Xl ,Xr) => {
         if (check < 0.000001) {
             break;
         }
+        solution.push({resultX:Xm , funcXright : funcXright , check:check});
     }
 
-    return Xm;
+    return {Xm , solution};
 }
 export default Bisection_Method;

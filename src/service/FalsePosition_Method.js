@@ -12,6 +12,7 @@ const FalsePosition_Method = (equation , Xl , Xr) => {
     let X1 = 0;
     let funcX1 , funcXright , funcXleft
     let check;
+    let solution = []; 
     while(1){
         funcX1 = calculate(X1)
         funcXright = calculate(XRight)
@@ -31,8 +32,9 @@ const FalsePosition_Method = (equation , Xl , Xr) => {
         if (check < 0.000001) {
             break;
         }
+        solution.push({resultX:X1 , funcXright : funcXright , check:check});
     }
-    return X1;
+    return {X1 , solution};
 }
 
 export default FalsePosition_Method;

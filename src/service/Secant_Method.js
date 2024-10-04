@@ -7,7 +7,7 @@ const Secant_Method = (equation , guess , guess2) =>{
         let result = evaluate(normalizeEquation(equation) , {x : x});
         return result;
     }
-    
+    let solution = []
     let x0 = parseFloat(guess); 
     let x1 = parseFloat(guess2); 
     let error = 1;
@@ -20,8 +20,9 @@ const Secant_Method = (equation , guess , guess2) =>{
         x0 = x1;
         x1 = new_x;
         i++;
+        solution.push({resultX:new_x , funcXright : f_x1 , check:error});
     }
     
-    return new_x;
+    return {new_x , solution};
 }
 export default Secant_Method;

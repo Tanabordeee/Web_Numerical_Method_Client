@@ -11,6 +11,7 @@ const OnePoint_Iterration = (equation , guess) =>{
     let x = parseInt(guess);
     let old_x = 0;
     let new_x = 0;
+    let solution = [];
     if(x == 0){
         x = 1;
     }
@@ -20,11 +21,12 @@ const OnePoint_Iterration = (equation , guess) =>{
         new_x = x;
         let check = Math.abs(new_x - old_x);
         if (check < 0.000001){
-            return new_x;
+            return {new_x , solution};
         }
         if(new_x == Infinity || new_x == -Infinity){
-            return "Infinity";
+            return {new_x : "Infinity" , solution};
         }
+        solution.push({resultX:new_x , check:check});
     }
 }
 export default OnePoint_Iterration;

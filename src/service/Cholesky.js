@@ -8,7 +8,6 @@ const Cholesky_Decomposition = (MatrixA, MatrixB) => {
   let n = A.length;
   let L = zeros(n, n).valueOf();
 
-  // Check if the matrix is symmetric
   const isSymmetric = (matrix) => {
     return matrix.every((row, i) =>
       row.every((value, j) => value === matrix[j][i])

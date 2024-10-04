@@ -8,7 +8,7 @@ import FalsePosition_Method from './service/FalsePosition_Method';
 import NewTonRaphson from './service/NewTonRaphson';
 import OnePoint_Iterration from './service/OnePoint_Iterration';
 import Secant_Method from './service/Secant_Method';
-
+import TableRootEquation from "../src/components/TableRootEquation";
 function App() {
   const [method, Setmethod] = useState("Graphical");
   const [equation, SetEquation] = useState("");
@@ -20,7 +20,7 @@ function App() {
   const [guess2, SetGuess2] = useState("");
   const [inputValue, setInputValue] = useState("");
   const [Data, SetData] = useState({});
-
+  const [solution , Setsolution] = useState([]);
   useEffect(() => {
     async function fetchData() {
       try {
@@ -68,7 +68,8 @@ function App() {
       SetLoading(true);
       await new Promise(resolve => setTimeout(resolve, 500));
       let FalsePositionResult = FalsePosition_Method(equation , Xl , Xr);
-      SetAnswer(FalsePositionResult);
+      SetAnswer(FalsePositionResult.X1);
+      Setsolution(FalsePositionResult.solution);
       SetLoading(false);
 
       Swal.fire({
@@ -94,7 +95,8 @@ function App() {
       SetLoading(true);
       await new Promise(resolve => setTimeout(resolve, 500));
       let BisectionResult = Bisection_Method(equation , Xl , Xr);
-      SetAnswer(BisectionResult);
+      SetAnswer(BisectionResult.Xm);
+      Setsolution(BisectionResult.solution);
       SetLoading(false);
 
       Swal.fire({
@@ -120,7 +122,8 @@ function App() {
       SetLoading(true);
       await new Promise(resolve => setTimeout(resolve, 500));
       let OnePointResult = OnePoint_Iterration(equation , guess);
-      SetAnswer(OnePointResult);
+      SetAnswer(OnePointResult.new_x);
+      Setsolution(OnePointResult.solution);
       SetLoading(false);
 
       Swal.fire({
@@ -146,7 +149,8 @@ function App() {
       SetLoading(true);
       await new Promise(resolve => setTimeout(resolve, 500));
       let NewTonRaphsonResult = NewTonRaphson(equation , guess);
-      SetAnswer(NewTonRaphsonResult);
+      SetAnswer(NewTonRaphsonResult.x_new);
+      Setsolution(NewTonRaphsonResult.solution);
       SetLoading(false);
 
       Swal.fire({
@@ -172,7 +176,8 @@ function App() {
       SetLoading(true);
       await new Promise(resolve => setTimeout(resolve, 500));
       let SecantResult = Secant_Method(equation , guess ,guess2);
-      SetAnswer(SecantResult);
+      SetAnswer(SecantResult.new_x);
+      Setsolution(SecantResult.solution);
       SetLoading(false);
 
       Swal.fire({
@@ -285,6 +290,7 @@ function App() {
           <div className="flex justify-center my-4">
             <Calculator equation={equation} point={parseFloat(answer)} />
           </div>
+          {method != "Graphical" && <div><TableRootEquation result={solution} method={method}/></div>}
         </>
       )}
       <div className=' static w-80 top-auto right-auto mx-auto mb-5 md:fixed md:top-24 md:right-11 w-80 bg-gray-100 p-5 rounded-md shadow-md'>

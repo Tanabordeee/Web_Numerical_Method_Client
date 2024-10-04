@@ -19,6 +19,7 @@ let x_new = 0;
 let x_old = 0;
 let i = 0;
 let error = 1;
+let solution = [];
 while (error > 0.000001){
     x_old = x;
     let funcX = calculate(x);
@@ -27,7 +28,8 @@ while (error > 0.000001){
     x_new = x;
     error = abs(x_new - x_old);
     i++;
+    solution.push({resultX:x_new , funcXright : funcX_diff , check:error});
 }
- return x_new;
+ return {x_new , solution};
 }
 export default NewTonRaphson;
