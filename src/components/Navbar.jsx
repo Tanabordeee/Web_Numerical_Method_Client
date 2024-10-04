@@ -40,7 +40,7 @@ const Navbar = () => {
             Linear algebra equation
           </button>
           <button className="border p-2 mr-5 rounded-md hover:bg-green-200">
-            Extrapolation
+            Interpolation
           </button>
           <button className="border p-2 mr-5 rounded-md hover:bg-green-200">
             Integration
