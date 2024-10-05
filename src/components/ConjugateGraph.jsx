@@ -9,7 +9,7 @@ const ConjugateGraph = ({ data, type, result }) => {
   // Ensure matrixA and arrB are arrays
   if (!Array.isArray(matrixA) || !Array.isArray(arrB)) {
     console.error("matrixA or arrB is not an array:", matrixA, arrB);
-    return <div>Error: Invalid data format</div>; // or render an error message
+    return <div>Error: Invalid data format</div>; 
   }
 
   const calculateFx = (x, y, matrixA, arrB) => {
