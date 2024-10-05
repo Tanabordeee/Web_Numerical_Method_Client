@@ -108,7 +108,7 @@ const SolutionDisplay = ({
           <p className="text-2xl m-1">CALCULATING ... </p>
         ) : (
           <>
-            <button onClick={toggleViewType} className="mb-4 p-2 bg-blue-500 text-white rounded">
+            <button onClick={toggleViewType} className="mb-4 p-2 bg-green-500 text-white rounded hover:bg-red-500">
               Toggle View: {viewType}
             </button>
             <ConjugateGraph
