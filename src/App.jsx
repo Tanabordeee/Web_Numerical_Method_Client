@@ -9,6 +9,7 @@ import NewTonRaphson from './service/NewTonRaphson';
 import OnePoint_Iterration from './service/OnePoint_Iterration';
 import Secant_Method from './service/Secant_Method';
 import TableRootEquation from "../src/components/TableRootEquation";
+import axios from 'axios';
 function App() {
   const [method, Setmethod] = useState("Graphical");
   const [equation, SetEquation] = useState("");
@@ -30,7 +31,7 @@ function App() {
       } catch (error) {
         Swal.fire({
           title: "Error",
-          text: "Failed to GET EQUATION",
+          text: error.message,
           icon: "error"
         });
       }
