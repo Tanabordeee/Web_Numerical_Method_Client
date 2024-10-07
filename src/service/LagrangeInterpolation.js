@@ -1,23 +1,33 @@
-let x = [0,20000,40000,60000,80000]
-let y = [9.81,9.7487,9.6879,9.6879,9.5682]
-let l = new Array(x.length).fill(0);
-value = 42000;
-sum1 = 1;
-sum2 = 1;
-result = 0;
-// find L
-for(let i = 0 ; i < x.length ; i++){ 
-    sum1 = 1;
-    sum2 = 1;
-    for(let j = 0 ; j < x.length ; j++){
-        if(i!=j){
-            sum1 *= (x[j] - value);
-            sum2 *= (x[j] - x[i]);
+const LagrangeInterpolation = (x, y, val) => {
+    let xCopy = [...x]; 
+    let yCopy = [...y]; 
+    let l = new Array(xCopy.length).fill(0);
+    let value = val;
+    let result = 0;
+    let solution = { "L": [], "results": [], "Y": [] };
+
+    // Find L
+    for (let i = 0; i < xCopy.length; i++) {
+        let sum1 = 1;
+        let sum2 = 1;
+        for (let j = 0; j < xCopy.length; j++) {
+            if (i !== j) {
+                sum1 *= (xCopy[j] - value);
+                sum2 *= (xCopy[j] - xCopy[i]);
+            }
         }
+        l[i] = sum1 / sum2;
     }
-    l[i] = sum1 / sum2;
-}
-for(let i = 0 ; i < x.length ; i++){
-    result += (l[i] * y[i]);
-}
-console.log(result);
+
+    // Calculate result
+    for (let i = 0; i < xCopy.length; i++) {
+        result += (l[i] * yCopy[i]);
+        solution.results.push(result);
+    }
+
+    solution.L = l;
+    solution.Y = yCopy;
+    return { result, solution };
+};
+
+export default LagrangeInterpolation;
