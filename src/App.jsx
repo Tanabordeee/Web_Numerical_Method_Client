@@ -9,6 +9,7 @@ import NewTonRaphson from './service/NewTonRaphson';
 import OnePoint_Iterration from './service/OnePoint_Iterration';
 import Secant_Method from './service/Secant_Method';
 import TableRootEquation from "../src/components/TableRootEquation";
+import ExampleEquations from './components/ExampleEquations';
 import axios from 'axios';
 function App() {
   const [method, Setmethod] = useState("Graphical");
@@ -294,24 +295,7 @@ function App() {
           {method != "Graphical" && <div><TableRootEquation result={solution} method={method}/></div>}
         </>
       )}
-      <div className=' static w-80 top-auto right-auto mx-auto mb-5 md:fixed md:top-24 md:right-11 w-80 bg-gray-100 p-5 rounded-md shadow-md'>
-        <h1 className='mb-5 text-center'>EQUATION EXAMPLE</h1>
-        <div className='overflow-y-auto h-80'>
-          {Array.isArray(Data) && Data.map((data, index) => (
-            <div key={index} className='flex bg-gray-200 p-4 rounded-lg justify-between items-center mb-5'>
-              <div className='flex-1'>
-                <label className='block truncate'>{data.equation}</label>
-              </div>
-              <button
-                onClick={() => handleEquationChange_ADD(data.equation)}
-                className='bg-red-500 text-white pl-5 pr-5 rounded-md hover:bg-red-600'
-              >
-                ADD
-              </button>
-            </div>
-          ))}
-        </div>
-      </div>
+      <ExampleEquations data={Data} onAddEquation={handleEquationChange_ADD}/>
     </>
   );
 }
