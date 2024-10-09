@@ -59,7 +59,9 @@ const SolutionDisplay = ({
               {solution2?.U?.length > 0 ? (
                 <>
                   <p className="text-xl font-bold text-center">[U]</p>
-                  <div className={`grid grid-cols-${solution2.U[0].length} gap-2`}>
+                  <div
+                    className={`grid grid-cols-${solution2.U[0].length} gap-2`}
+                  >
                     {solution2.U.flatMap((rowU, rowIndex) =>
                       rowU.map((colU, colIndex) => (
                         <span
@@ -75,7 +77,9 @@ const SolutionDisplay = ({
               ) : solution2?.L_transpose?.length > 0 ? (
                 <>
                   <p className="text-xl font-bold text-center">[L_transpose]</p>
-                  <div className={`grid grid-cols-${solution2.L_transpose[0].length} gap-2`}>
+                  <div
+                    className={`grid grid-cols-${solution2.L_transpose[0].length} gap-2`}
+                  >
                     {solution2.L_transpose.flatMap((rowU, rowIndex) =>
                       rowU.map((colU, colIndex) => (
                         <span
@@ -108,7 +112,10 @@ const SolutionDisplay = ({
           <p className="text-2xl m-1">CALCULATING ... </p>
         ) : (
           <>
-            <button onClick={toggleViewType} className="mb-4 p-2 bg-green-500 text-white rounded hover:bg-red-500">
+            <button
+              onClick={toggleViewType}
+              className="mb-4 p-2 bg-green-500 text-white rounded hover:bg-red-500"
+            >
               Toggle View: {viewType}
             </button>
             <ConjugateGraph
@@ -146,19 +153,22 @@ const SolutionDisplay = ({
                     {/* Display Calculation A */}
                     <div className="flex flex-col justify-center items-center">
                       <p className="mb-3 text-4xl">[A]</p>
-                      <div className="bg-white p-4 rounded-lg shadow-md">
+                      <div className="bg-white p-4 rounded-lg shadow-md w-full">
                         {answer.calculationA.map((res, index) => (
                           <div
                             key={index}
-                            className={`grid grid-rows-${answer.calculationA[0].length == 2 ? "3" : answer.calculationA[0].length} border p-5 mb-2`}
+                            className="border p-5 mb-2"
+                            style={{
+                              display: "grid",
+                              gridTemplateRows: `repeat(${res[0].length - res[0].length + 1}, minmax(0, 1fr))`,
+                              gridTemplateColumns: `repeat(${res[0].length}, minmax(0, 1fr))`,
+                              gap: "2px",
+                            }}
                           >
                             {res.map((res2, index2) => (
-                              <div
-                                key={index2}
-                                className={`grid grid-cols-${answer.calculationA[0].length == 2 ? "3" : answer.calculationA[0].length} gap-2`}
-                              >
+                              <div key={index2} className="border p-2">
                                 {res2.map((res3, index3) => (
-                                  <div key={index3} className="border mb-1 p-2">
+                                  <div key={index3} className="border p-2">
                                     {round(res3, 2)}
                                   </div>
                                 ))}
@@ -179,13 +189,16 @@ const SolutionDisplay = ({
                             {answer.calculationI.map((res, index) => (
                               <div
                                 key={index}
-                                className={`grid grid-rows-${answer.calculationI[0].length} border p-5 mb-2`}
+                                className="border p-5 mb-2"
+                            style={{
+                              display: "grid",
+                              gridTemplateRows: `repeat(${res[0].length - res[0].length + 1}, minmax(0, 1fr))`,
+                              gridTemplateColumns: `repeat(${res[0].length}, minmax(0, 1fr))`,
+                              gap: "2px",
+                            }}
                               >
                                 {res.map((res2, index2) => (
-                                  <div
-                                    key={index2}
-                                    className={`grid grid-cols-${answer.calculationI[0].length} gap-2`}
-                                  >
+                                  <div key={index2} className="border p-2">
                                     {res2.map((res3, index3) => (
                                       <div
                                         key={index3}
