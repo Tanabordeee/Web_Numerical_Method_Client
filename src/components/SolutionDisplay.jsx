@@ -150,12 +150,12 @@ const SolutionDisplay = ({
                         {answer.calculationA.map((res, index) => (
                           <div
                             key={index}
-                            className={`grid grid-rows-${answer.calculationA[0].length} border p-5 mb-2`}
+                            className={`grid grid-rows-${answer.calculationA[0].length == 2 ? "3" : answer.calculationA[0].length} border p-5 mb-2`}
                           >
                             {res.map((res2, index2) => (
                               <div
                                 key={index2}
-                                className={`grid grid-cols-${answer.calculationA[0].length} gap-2`}
+                                className={`grid grid-cols-${answer.calculationA[0].length == 2 ? "3" : answer.calculationA[0].length} gap-2`}
                               >
                                 {res2.map((res3, index3) => (
                                   <div key={index3} className="border mb-1 p-2">
