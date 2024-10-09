@@ -150,12 +150,12 @@ const SolutionDisplay = ({
                         {answer.calculationA.map((res, index) => (
                           <div
                             key={index}
-                            className="grid grid-rows-3 border p-5 mb-2"
+                            className={`grid grid-rows-${answer.calculationA[0].length} border p-5 mb-2`}
                           >
                             {res.map((res2, index2) => (
                               <div
                                 key={index2}
-                                className="grid grid-cols-3 gap-2"
+                                className={`grid grid-cols-${answer.calculationA[0].length} gap-2`}
                               >
                                 {res2.map((res3, index3) => (
                                   <div key={index3} className="border mb-1 p-2">
@@ -175,16 +175,16 @@ const SolutionDisplay = ({
                         <p className="mb-3 text-4xl">[I]</p>
                         {Array.isArray(answer.calculationI) &&
                         answer.calculationI.length > 0 ? (
-                          <div className="bg-white p-4 rounded-lg shadow-md">
+                          <div className="bg-white p-4 rounded-lg shadow-md w-full max-w-2xl">
                             {answer.calculationI.map((res, index) => (
                               <div
                                 key={index}
-                                className="grid grid-rows-3 border p-5 mb-2"
+                                className={`grid grid-rows-${answer.calculationI[0].length} border p-5 mb-2`}
                               >
                                 {res.map((res2, index2) => (
                                   <div
                                     key={index2}
-                                    className="grid grid-cols-3 gap-2"
+                                    className={`grid grid-cols-${answer.calculationI[0].length} gap-2`}
                                   >
                                     {res2.map((res3, index3) => (
                                       <div
