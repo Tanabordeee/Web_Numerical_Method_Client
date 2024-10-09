@@ -295,7 +295,7 @@ function App() {
           {method != "Graphical" && <div><TableRootEquation result={solution} method={method}/></div>}
         </>
       )}
-      <ExampleEquations data={Data} onAddEquation={handleEquationChange_ADD}/>
+      <ExampleEquations data={Data} onAddEquation={handleEquationChange_ADD} title={"root"} />
     </>
   );
 }

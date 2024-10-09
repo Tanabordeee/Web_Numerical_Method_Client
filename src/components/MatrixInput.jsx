@@ -63,6 +63,7 @@ const MatrixInput = ({
             onChange={(e) =>
               handleMatrixAChange(e.target.value, rowIndex, colIndex)
             }
+            value={_}
             key={`${rowIndex}-${colIndex}`}
             type="number"
             placeholder={`a${rowIndex * size + colIndex + 1}`}
@@ -79,6 +80,7 @@ const MatrixInput = ({
         className="text-center border w-[60%] h-20 mb-3 rounded-lg"
         type="number"
         key={index}
+        value={_}
         placeholder={`b${index + 1}`}
         onChange={(e) => handleMatrixBChange(e.target.value, index)}
       />

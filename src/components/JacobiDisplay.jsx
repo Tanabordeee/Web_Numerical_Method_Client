@@ -17,9 +17,9 @@ const JacobiDisplay = ({ result, solution }) => {
             {(result && result.length > 0) ? (
               result.map((res, index) => (
                 <tr key={index}>
-                  <td className="p-5 border border-black">{res.iteration}</td>
-                  <td className="p-5 border border-black">X{res.index + 1}</td>
-                  <td className="p-5 border border-black">{round(res.val, 9)}</td>
+                  <td className={`p-5 border border-black ${index >= result.length - 3 ? "text-red-500" : ""}`}>{res.iteration}</td>
+                  <td className={`p-5 border border-black ${index >= result.length - 3 ? "text-red-500" : ""}`}>X{res.index + 1}</td>
+                  <td className={`p-5 border border-black ${index >= result.length - 3 ? "text-red-500" : ""}`}>{round(res.val, 9)}</td>
                 </tr>
               ))
             ) : (

@@ -1,5 +1,3 @@
-// src/components/LinearAlgebra.js
-
 import React, { useState, useEffect } from "react";
 import Navbar from "./Navbar";
 import { isInteger, resolve, round } from "mathjs";
@@ -18,6 +16,9 @@ import SolutionDisplay from "./SolutionDisplay";
 import SizeInput from "./SizeInput";
 import GaussSeidel from "../service/GuassSeidel";
 import jacobiMethod from "../service/JacobiMethod";
+import axios from 'axios';
+import ExampleEquations from '../components/ExampleEquations';
+
 const LinearAlgebra = () => {
   const [size, setSize] = useState(3);
   const [matrixA, setMatrixA] = useState([]);
@@ -33,8 +34,23 @@ const LinearAlgebra = () => {
   const [answerjacobi , setAnswerjacobi] = useState({});
   const [jacobiSolution, setjacobiSolution] = useState({});
   const [loading, setLoading] = useState(false);
+  const [data , setData] = useState([]);
   // Initialize matrices based on the size
   useEffect(() => {
+    async function fetchData() {
+      try {
+        const apiUrl = `${import.meta.env.VITE_REACT_API_URL}/GetLinearEquation`;
+        const response = await axios.get(apiUrl);
+        setData(response.data.equation);
+      } catch (error) {
+        Swal.fire({
+          title: "Error",
+          text: error.message,
+          icon: "error"
+        });
+      }
+    }
+    fetchData();
     if (size > 0 && isInteger(size)) {
       const newMatrixA = Array.from({ length: size }, () =>
         Array(size).fill(0)
@@ -48,7 +64,7 @@ const LinearAlgebra = () => {
       setAnswer2([]);
       setAnswerConjugate({});
       setAnswerGuassSeidel({});
-      setAnswerjacobi({})
+      setAnswerjacobi({});
     } else {
       setMatrixA([]);
       setMatrixB([]);
@@ -56,9 +72,10 @@ const LinearAlgebra = () => {
       setAnswer2([]);
       setAnswerConjugate({});
       setAnswerGuassSeidel({});
-      setAnswerjacobi({})
+      setAnswerjacobi({});
     }
   }, [size]);
+
   // Calculation Functions
   const Cramer_Calculate = async (e) => {
     e.preventDefault();
@@ -79,7 +96,7 @@ const LinearAlgebra = () => {
       setLoading(false);
       Swal.fire({
         title: "Error",
-        text: "Failed to calculate. Please try again.",
+        text: err.message,
         icon: "error",
       });
     }
@@ -181,6 +198,7 @@ const LinearAlgebra = () => {
       });
     }
   };
+
   const Cholseky = async (e) => {
     e.preventDefault();
     try {
@@ -263,7 +281,6 @@ const LinearAlgebra = () => {
         setLoading(true);
         await new Promise((resolve) => setTimeout(resolve, 500));
         const JacobiResult = jacobiMethod(matrixA, matrixB, matrixX);
-        console.log(JacobiResult.result);
         setAnswerjacobi(JacobiResult.result);
         setjacobiSolution(JacobiResult.solution);
         setLoading(false);
@@ -280,7 +297,8 @@ const LinearAlgebra = () => {
             icon: "error",
         });
     }
-};
+  };
+
   // Mapping methods to their corresponding calculation functions
   const methodCalculationMap = {
     Cramer: Cramer_Calculate,
@@ -291,13 +309,19 @@ const LinearAlgebra = () => {
     Cholesky_Decomposition: Cholseky,
     ConjugateGradientMethod: ConjugateGradientMethods,
     GaussSeidel: GaussSeidels,
-    jacobiMethods:Jacobi
+    jacobiMethods: Jacobi
   };
-
+  const handleEquationChange_ADD = (mtA, mtB, len) => {
+    setMatrixA(mtA);
+    setMatrixB(mtB);
+    setSize(len);
+    console.log(len)
+};
   return (
     <>
       <Navbar />
       <div className="flex flex-col justify-center my-4 items-center">
+        <ExampleEquations data={data} onAddEquation={handleEquationChange_ADD} title={"Linear"} />
         {/* Size Input */}
         <SizeInput size={size} setSize={setSize} />
 
@@ -333,10 +357,10 @@ const LinearAlgebra = () => {
           size={size}
           matrixA={matrixA}
           matrixB={matrixB}
-          GuassSeidelSolution = {GuassSeidelSolution}
-          answerGuassSeidel = {answerGuassSeidel}
-          JacobiSolution = {jacobiSolution}
-          answerJacobi = {answerjacobi}
+          GuassSeidelSolution={GuassSeidelSolution}
+          answerGuassSeidel={answerGuassSeidel}
+          JacobiSolution={jacobiSolution}
+          answerJacobi={answerjacobi}
         />
       </div>
     </>
