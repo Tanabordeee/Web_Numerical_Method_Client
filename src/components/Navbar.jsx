@@ -44,6 +44,11 @@ const Navbar = () => {
           className="border p-2 mr-5 rounded-md hover:bg-green-200">
             Interpolation
           </button>
+          <button 
+            onClick={()=> navigate("/Extrapolation")}
+          className="border p-2 mr-5 rounded-md hover:bg-green-200">
+            Extrapolation
+          </button>
           <button className="border p-2 mr-5 rounded-md hover:bg-green-200">
             Integration
           </button>
@@ -81,7 +86,14 @@ const Navbar = () => {
           >
             Linear algebra equation
           </button>
-          <button className="border p-2 rounded-md hover:bg-green-200">
+          <button 
+          onClick={() => navigate("/Interpolation")}
+          className="border p-2 rounded-md hover:bg-green-200">
+            Interpolation
+          </button>
+          <button
+          onClick={()=> navigate("/Extrapolation")}
+          className="border p-2 mr-5 rounded-md hover:bg-green-200">
             Extrapolation
           </button>
           <button className="border p-2 rounded-md hover:bg-green-200">
