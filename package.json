@@ -12,7 +12,10 @@
   "dependencies": {
     "axios": "^1.7.7",
     "desmos": "^1.5.4",
+    "install": "^0.13.0",
+    "katex": "^0.16.11",
     "mathjs": "^13.1.1",
+    "npm": "^10.9.0",
     "numerical-method-project": "file:",
     "plotly.js": "^2.35.2",
     "react": "^18.3.1",

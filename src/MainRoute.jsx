@@ -4,6 +4,7 @@ import App from "./App";
 import LinearAlgrebra from "./components/LinearAlgrebra";
 import Interpolation from "./components/Interpolation";
 import Extrapolation from "./components/Extrapolation";
+import Integration from "./components/Integration";
 const MainRoutes = ()=>{
     return(
         <Router>
@@ -12,6 +13,7 @@ const MainRoutes = ()=>{
                 <Route path="/Linear" element = {<LinearAlgrebra/>}></Route>
                 <Route path="/Interpolation" element = {<Interpolation/>}></Route>
                 <Route path="/Extrapolation" element = {<Extrapolation/>}></Route>
+                <Route path="/Integration" element={<Integration/>}></Route>
             </Routes>
         </Router>
     )
