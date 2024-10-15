@@ -1,6 +1,6 @@
 import Plot from 'react-plotly.js';
 
-const SimpleRegressionGraph = ({ data, predictedPoints}) => {
+const SimpleRegressionGraph = ({ data, predictedPoints , method}) => {
     console.log("Predicted Points:", predictedPoints);
     return (
         <Plot
@@ -23,7 +23,7 @@ const SimpleRegressionGraph = ({ data, predictedPoints}) => {
             }
         ]}
         layout={{ 
-            title: 'Simple Regression Graph',
+            title: `${method === "SimpleRegression" ? "Simple Regression Graph" : "Multiple Regression Graph" }`,
             xaxis: { title: 'X values' },
             yaxis: { title: 'Y values' },
         }}
