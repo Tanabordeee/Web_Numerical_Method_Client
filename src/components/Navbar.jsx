@@ -57,7 +57,9 @@ const Navbar = () => {
           >
             Integration
           </button>
-          <button className="border p-2 mr-5 rounded-md hover:bg-green-200">
+          <button 
+          onClick={()=> navigate("/Differntiation")}
+          className="border p-2 mr-5 rounded-md hover:bg-green-200">
             Differentiation
           </button>
         </div>

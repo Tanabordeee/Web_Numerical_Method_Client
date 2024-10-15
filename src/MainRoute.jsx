@@ -5,6 +5,7 @@ import LinearAlgrebra from "./components/LinearAlgrebra";
 import Interpolation from "./components/Interpolation";
 import Extrapolation from "./components/Extrapolation";
 import Integration from "./components/Integration";
+import Diffentiation from "./components/Differentiation";
 const MainRoutes = ()=>{
     return(
         <Router>
@@ -14,6 +15,7 @@ const MainRoutes = ()=>{
                 <Route path="/Interpolation" element = {<Interpolation/>}></Route>
                 <Route path="/Extrapolation" element = {<Extrapolation/>}></Route>
                 <Route path="/Integration" element={<Integration/>}></Route>
+                <Route path="/Differntiation" element={<Diffentiation/>}></Route>
             </Routes>
         </Router>
     )
