@@ -26,7 +26,7 @@ function App() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const apiUrl = `${import.meta.env.VITE_REACT_API_URL}/Getequation`;
+        const apiUrl = `${import.meta.env.VITE_REACT_API_URL}/GetRootEquation`;
         const response = await axios.get(apiUrl);
         SetData(response.data.equation); 
       } catch (error) {
@@ -38,7 +38,7 @@ function App() {
       }
     }
     fetchData();
-  }, []);
+  }, [Data . Xl ,Xr ,guess , guess2]);
 
   const handleGraphical = async (e) => {
     e.preventDefault();
@@ -204,8 +204,13 @@ function App() {
     setInputValue(e.target.value);
   };
 
-  const handleEquationChange_ADD = (value) => {
+  const handleEquationChange_ADD = (value , XL ,XR , Gval , SGval) => {
     SetEquation(value);
+    console.log(XL)
+    SetXl(XL);
+    SetXr(XR);
+    SetGuess(Gval);
+    SetGuess2(SGval);
     setInputValue(value);
   };
 
@@ -222,8 +227,8 @@ function App() {
         return (
           <form className="flex justify-center my-4 flex-col items-center" onSubmit={handleFalsePosition}>
             <input value={inputValue} onChange={handleEquationChange} className="p-2 border-solid border-2 focus:outline-none focus:border-rose-600 rounded-md" type="text" placeholder="equation = x^4-13" />
-            <input onChange={(e) => { SetXl(e.target.value) }} className="p-2 border-solid border-2 focus:outline-none focus:border-rose-600 rounded-md mt-4 mb-4" placeholder="XL value = 1.5" />
-            <input onChange={(e) => { SetXr(e.target.value) }} className="p-2 border-solid border-2 focus:outline-none focus:border-rose-600 rounded-md mb-4" placeholder="XR value = 2.0" />
+            <input value={Xl} onChange={(e) => { SetXl(e.target.value) }} className="p-2 border-solid border-2 focus:outline-none focus:border-rose-600 rounded-md mt-4 mb-4" placeholder="XL value = 1.5" />
+            <input value={Xr} onChange={(e) => { SetXr(e.target.value) }} className="p-2 border-solid border-2 focus:outline-none focus:border-rose-600 rounded-md mb-4" placeholder="XR value = 2.0" />
             <button type="submit" className='p-2 bg-green-500 text-white rounded-md hover:bg-green-600'>Calculate</button>
           </form>
         );
@@ -231,33 +236,33 @@ function App() {
         return (
           <form className="flex justify-center my-4 flex-col items-center" onSubmit={handleBisection}>
             <input value={inputValue} onChange={handleEquationChange} className="p-2 border-solid border-2 focus:outline-none focus:border-rose-600 rounded-md" type="text" placeholder="equation = x^4-13" />
-            <input onChange={(e) => { SetXl(e.target.value) }} className="p-2 border-solid border-2 focus:outline-none focus:border-rose-600 rounded-md mt-4 mb-4" placeholder="XL value = 1.5" />
-            <input onChange={(e) => { SetXr(e.target.value) }} className="p-2 border-solid border-2 focus:outline-none focus:border-rose-600 rounded-md mb-4" placeholder="XR value = 2.0" />
+            <input value={Xl} onChange={(e) => { SetXl(e.target.value) }} className="p-2 border-solid border-2 focus:outline-none focus:border-rose-600 rounded-md mt-4 mb-4" placeholder="XL value = 1.5" />
+            <input value={Xr} onChange={(e) => { SetXr(e.target.value) }} className="p-2 border-solid border-2 focus:outline-none focus:border-rose-600 rounded-md mb-4" placeholder="XR value = 2.0" />
             <button type="submit" className='p-2 bg-green-500 text-white rounded-md hover:bg-green-600'>Calculate</button>
           </form>
         );
       case "OnePoint":
         return (
           <form className="flex justify-center my-4 flex-col items-center" onSubmit={handleOnePoint}>
-            <input value={inputValue} onChange={handleEquationChange} className="p-2 border-solid border-2 focus:outline-none focus:border-rose-600 rounded-md" type="text" placeholder="equation = 0.5-x^3" />
-            <input onChange={(e) => { SetGuess(e.target.value) }} className="p-2 border-solid border-2 focus:outline-none focus:border-rose-600 rounded-md mt-4 mb-4" placeholder="Guess value = 1" />
+            <input value={inputValue} onChange={handleEquationChange} className="p-2 border-solid border-2 focus:outline-none focus:border-rose-600 rounded-md" type="text" placeholder="equation = x^4-13" />
+            <input value={guess} onChange={(e) => { SetGuess(e.target.value) }} className="p-2 border-solid border-2 focus:outline-none focus:border-rose-600 rounded-md mt-4 mb-4" placeholder="Guess value = 1.0" />
             <button type="submit" className='p-2 bg-green-500 text-white rounded-md hover:bg-green-600'>Calculate</button>
           </form>
         );
       case "NewTonRaphson":
         return (
           <form className="flex justify-center my-4 flex-col items-center" onSubmit={handleNewTonRaphson}>
-            <input value={inputValue} onChange={handleEquationChange} className="p-2 border-solid border-2 focus:outline-none focus:border-rose-600 rounded-md" type="text" placeholder="equation = 0.5-x^3" />
-            <input onChange={(e) => { SetGuess(e.target.value) }} className="p-2 border-solid border-2 focus:outline-none focus:border-rose-600 rounded-md mt-4 mb-4" placeholder="Guess value = 1" />
+            <input value={inputValue} onChange={handleEquationChange} className="p-2 border-solid border-2 focus:outline-none focus:border-rose-600 rounded-md" type="text" placeholder="equation = x^4-13" />
+            <input value={guess} onChange={(e) => { SetGuess(e.target.value) }} className="p-2 border-solid border-2 focus:outline-none focus:border-rose-600 rounded-md mt-4 mb-4" placeholder="Guess value = 1.0" />
             <button type="submit" className='p-2 bg-green-500 text-white rounded-md hover:bg-green-600'>Calculate</button>
           </form>
         );
-      case "Secant_Method":
+      case "SecantMethod":
         return (
           <form className="flex justify-center my-4 flex-col items-center" onSubmit={handleSecantMethod}>
-            <input value={inputValue} onChange={handleEquationChange} className="p-2 border-solid border-2 focus:outline-none focus:border-rose-600 rounded-md" type="text" placeholder="equation = 0.5-x^3" />
-            <input onChange={(e) => { SetGuess(e.target.value) }} className="p-2 border-solid border-2 focus:outline-none focus:border-rose-600 rounded-md mt-4 mb-4" placeholder="Guess value = 1" />
-            <input onChange={(e) => { SetGuess2(e.target.value) }} className="p-2 border-solid border-2 focus:outline-none focus:border-rose-600 rounded-md mb-4" placeholder="Second Guess value = 2" />
+            <input value={inputValue} onChange={handleEquationChange} className="p-2 border-solid border-2 focus:outline-none focus:border-rose-600 rounded-md" type="text" placeholder="equation = x^4-13" />
+            <input value={guess} onChange={(e) => { SetGuess(e.target.value) }} className="p-2 border-solid border-2 focus:outline-none focus:border-rose-600 rounded-md mt-4 mb-4" placeholder="First Guess value = 1.0" />
+            <input value={guess2} onChange={(e) => { SetGuess2(e.target.value) }} className="p-2 border-solid border-2 focus:outline-none focus:border-rose-600 rounded-md mb-4" placeholder="Second Guess value = 1.5" />
             <button type="submit" className='p-2 bg-green-500 text-white rounded-md hover:bg-green-600'>Calculate</button>
           </form>
         );

@@ -31,7 +31,9 @@ const ExampleEquations = ({ data, onAddEquation, title }) => {
                     <label className="block truncate">{item.equation}</label>
                   </div>
                   <button
-                    onClick={() => onAddEquation(item.equation)}
+                    onClick={() => {
+                      onAddEquation(item.equation, item.XL, item.XR, item.Gval, item.SGval);
+                    }}
                     className="bg-red-500 text-white pl-5 pr-5 rounded-md hover:bg-red-600"
                   >
                     ADD
