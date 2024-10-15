@@ -4,7 +4,7 @@ const CompositeSimpsonRule = (aInput,bInput,nInput, equation)=>{
     let n = nInput;
     let b = bInput;
     let a = aInput;
-    let h = (b-a)/n;
+    let h = (b-a)/(2*n);
     let solution = {};
     let func = (x)=>{
         return evaluate(equation , {x:x});
