@@ -12,7 +12,7 @@ const Integration = () => {
   const [method, setMethod] = useState("TrapeSingle");
   const [a, seta] = useState(NaN);
   const [b, setb] = useState(NaN);
-  const [n , setn] = useState(0);
+  const [n, setn] = useState(0);
   const [result, setResult] = useState(0);
   const [loading, setLoading] = useState(false);
   const [solution, setSolution] = useState({});
@@ -39,12 +39,17 @@ const Integration = () => {
   };
   const CompositeTrapezoidal = async (e) => {
     e.preventDefault();
-    try{
+    try {
       setLoading(true);
-      const CompositeTrapezoidal = await CompositeTrapeZoidal(a , b , n , equation);
+      const CompositeTrapezoidal = await CompositeTrapeZoidal(
+        a,
+        b,
+        n,
+        equation
+      );
       setResult(CompositeTrapezoidal.I);
       setSolution(CompositeTrapezoidal.solution);
-    }catch (err) {
+    } catch (err) {
       Swal.fire({
         title: "Error",
         text: err.message,
@@ -53,16 +58,16 @@ const Integration = () => {
     } finally {
       setLoading(false);
     }
-  }
+  };
 
-  const Simpson = async (e) =>{
+  const Simpson = async (e) => {
     e.preventDefault();
-    try{
+    try {
       setLoading(true);
-      const SimpsonResult = await SimpSonRulemethod(a , b  , equation);
+      const SimpsonResult = await SimpSonRulemethod(a, b, equation);
       setResult(SimpsonResult.I);
       setSolution(SimpsonResult.solution);
-    }catch (err) {
+    } catch (err) {
       Swal.fire({
         title: "Error",
         text: err.message,
@@ -71,16 +76,21 @@ const Integration = () => {
     } finally {
       setLoading(false);
     }
-  }
+  };
 
-  const CompositeSimpson = async (e) =>{
+  const CompositeSimpson = async (e) => {
     e.preventDefault();
-    try{
+    try {
       setLoading(true);
-      const CompositeSimpsonResult = await CompositeSimpsonRule(a , b ,n , equation);
+      const CompositeSimpsonResult = await CompositeSimpsonRule(
+        a,
+        b,
+        n,
+        equation
+      );
       setResult(CompositeSimpsonResult.I);
       setSolution(CompositeSimpsonResult.solution);
-    }catch (err) {
+    } catch (err) {
       Swal.fire({
         title: "Error",
         text: err.message,
@@ -89,7 +99,7 @@ const Integration = () => {
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
     try {
@@ -114,13 +124,11 @@ const Integration = () => {
   const handleCalculate = (e) => {
     if (method === "TrapeSingle") {
       TrapeZoidalSingle(e);
-    }else if(method === "compositeTrape"){
+    } else if (method === "compositeTrape") {
       CompositeTrapezoidal(e);
-    }
-    else if(method == "SimpsonRule"){
+    } else if (method == "SimpsonRule") {
       Simpson(e);
-    }
-    else if(method == "compositeSimp"){
+    } else if (method == "compositeSimp") {
       CompositeSimpson(e);
     }
   };
@@ -132,7 +140,7 @@ const Integration = () => {
           <>
             <div className="w-full h-full p-4 flex flex-col items-center justify-center text-3xl mb-20">
               <div
-              className="mb-5"
+                className="mb-5"
                 dangerouslySetInnerHTML={{
                   __html: katex.renderToString(
                     "I = \\frac{b-a}{2}\\left [ f(X_{0}) + f(X_{1}) \\right ]",
@@ -151,163 +159,156 @@ const Integration = () => {
             </div>
           </>
         );
-        case "compositeTrape":
-          return (
-            <>
-              <div className="w-full h-full p-4 flex flex-col items-center justify-center text-2xl mb-20">
+      case "compositeTrape":
+        return (
+          <>
+            <div className="w-full h-full p-4 flex flex-col items-center justify-center text-2xl mb-20">
               <div
-                  className="mb-5"
-                  dangerouslySetInnerHTML={{
-                    __html: katex.renderToString(
-                      "h = \\frac{b-a}{n}",
-                      { throwOnError: false }
-                    ),
-                  }}
-                />
-                <div
-                  className="mb-5"
-                  dangerouslySetInnerHTML={{
-                    __html: katex.renderToString(
-                      `h = \\frac{${b}-${a}}{${n}}`,
-                      { throwOnError: false }
-                    ),
-                  }}
-                />
-                <div
-                  className="mb-5"
-                  dangerouslySetInnerHTML={{
-                    __html: katex.renderToString(
-                      "I = \\frac{h}{2} \\left( f(x_{0}) + 2 \\sum_{i=1}^{n-1} f(x_{i}) + f(x_{n}) \\right)",
-                      { throwOnError: false }
-                    ),
-                  }}
-                />
-                <div
                 className="mb-5"
-                  dangerouslySetInnerHTML={{
-                    __html: katex.renderToString(
-                      `I = \\frac{${solution.h}}{2}\\left[ f(${a}) + 2\\sum_{i=1}^{n-1} f(x_{i}) + f(${b}) \\right]`,
-                      { throwOnError: false }
-                    ),
-                  }}
-                />
-                <div
-                className="mb-5"
-                  dangerouslySetInnerHTML={{
-                    __html: katex.renderToString(
-                      `I = \\frac{${solution.h}}{2}\\left[ ${solution.functionA} + 2(${solution.sum}) + ${solution.functionB} \\right]`,
-                      { throwOnError: false }
-                    ),
-                  }}
-                />
-              </div>
-            </>
-          );
-        case "SimpsonRule":
-          return (
-            <>
-              <div className="w-full h-full p-4 flex flex-col items-center justify-center text-2xl mb-20">
+                dangerouslySetInnerHTML={{
+                  __html: katex.renderToString("h = \\frac{b-a}{n}", {
+                    throwOnError: false,
+                  }),
+                }}
+              />
               <div
-                  className="mb-5"
-                  dangerouslySetInnerHTML={{
-                    __html: katex.renderToString(
-                      "h = \\frac{b-a}{2}",
-                      { throwOnError: false }
-                    ),
-                  }}
-                />
-                              <div
-                  className="mb-5"
-                  dangerouslySetInnerHTML={{
-                    __html: katex.renderToString(
-                      `h = \\frac{${b}-${a}}{2}`,
-                      { throwOnError: false }
-                    ),
-                  }}
-                />
-                <div
-                  className="mb-5"
-                  dangerouslySetInnerHTML={{
-                    __html: katex.renderToString(
-                      "I = \\frac{h}{3} \\left( f(x_{0}) + 4f(x_{1}) + f(x_{2}) \\right)",
-                      { throwOnError: false }
-                    ),
-                  }}
-                />
-                <div
                 className="mb-5"
-                  dangerouslySetInnerHTML={{
-                    __html: katex.renderToString(
-                      `I = \\frac{${solution.h}}{3}\\left[ f(${a}) + 4f(x_{1}) + f(${b}) \\right]`,
-                      { throwOnError: false }
-                    ),
-                  }}
-                />
-                <div
-                className="mb-5"
-                  dangerouslySetInnerHTML={{
-                    __html: katex.renderToString(
-                      `I = \\frac{${solution.h}}{3}\\left[ ${solution.functionA} + 4(${solution.functionAH}) + ${solution.functionB} \\right]`,
-                      { throwOnError: false }
-                    ),
-                  }}
-                />
-              </div>
-            </>
-          );
-        case "compositeSimp":
-          return (
-            <>
-              <div className="w-full h-full p-4 flex flex-col items-center justify-center text-2xl mb-20">
+                dangerouslySetInnerHTML={{
+                  __html: katex.renderToString(`h = \\frac{${b}-${a}}{${n}}`, {
+                    throwOnError: false,
+                  }),
+                }}
+              />
               <div
-                  className="mb-5"
-                  dangerouslySetInnerHTML={{
-                    __html: katex.renderToString(
-                      "h = \\frac{b-a}{n}",
-                      { throwOnError: false }
-                    ),
-                  }}
-                />
-                              <div
-                  className="mb-5"
-                  dangerouslySetInnerHTML={{
-                    __html: katex.renderToString(
-                      `h = \\frac{${b}-${a}}{${n}}`,
-                      { throwOnError: false }
-                    ),
-                  }}
-                />
-                <div
-                  className="mb-5"
-                  dangerouslySetInnerHTML={{
-                    __html: katex.renderToString(
-                      "I = \\frac{h}{3} \\left( f(x_{0}) + 4 \\sum_{i=1,3,5}^{n-1} f(x_{i}) + 2 \\sum_{i=2,4,6}^{n-1} f(x_{i}) + f(x_{n}) \\right)",
-                      { throwOnError: false }
-                    ),
-                  }}
-                />
-                <div
                 className="mb-5"
-                  dangerouslySetInnerHTML={{
-                    __html: katex.renderToString(
-                      `I = \\frac{${solution.h}}{3} \\left( f(${a}) + 4 \\sum_{i=1,3,5}^{n-1} f(x_{i}) + 2 \\sum_{i=2,4,6}^{n-1} f(x_{i}) + f(${b}) \\right)`,
-                      { throwOnError: false }
-                    ),
-                  }}
-                />
-<div
-  className="mb-5"
-  dangerouslySetInnerHTML={{
-    __html: katex.renderToString(
-      `I = \\frac{${solution.h}}{3} \\left( ${solution.functionA} + 4(${solution.sumood}) + 2(${solution.sumeven}) + ${solution.functionB} \\right)`,
-      { throwOnError: false }
-    ),
-  }}
-/>
-
-              </div>
-            </>
-          );
+                dangerouslySetInnerHTML={{
+                  __html: katex.renderToString(
+                    "I = \\frac{h}{2} \\left( f(x_{0}) + 2 \\sum_{i=1}^{n-1} f(x_{i}) + f(x_{n}) \\right)",
+                    { throwOnError: false }
+                  ),
+                }}
+              />
+              <div
+                className="mb-5"
+                dangerouslySetInnerHTML={{
+                  __html: katex.renderToString(
+                    `I = \\frac{${solution.h}}{2}\\left[ f(${a}) + 2\\sum_{i=1}^{n-1} f(x_{i}) + f(${b}) \\right]`,
+                    { throwOnError: false }
+                  ),
+                }}
+              />
+              <div
+                className="mb-5"
+                dangerouslySetInnerHTML={{
+                  __html: katex.renderToString(
+                    `I = \\frac{${solution.h}}{2}\\left[ ${solution.functionA} + 2(${solution.sum}) + ${solution.functionB} \\right]`,
+                    { throwOnError: false }
+                  ),
+                }}
+              />
+            </div>
+          </>
+        );
+      case "SimpsonRule":
+        return (
+          <>
+            <div className="w-full h-full p-4 flex flex-col items-center justify-center text-2xl mb-20">
+              <div
+                className="mb-5"
+                dangerouslySetInnerHTML={{
+                  __html: katex.renderToString("h = \\frac{b-a}{2}", {
+                    throwOnError: false,
+                  }),
+                }}
+              />
+              <div
+                className="mb-5"
+                dangerouslySetInnerHTML={{
+                  __html: katex.renderToString(`h = \\frac{${b}-${a}}{2}`, {
+                    throwOnError: false,
+                  }),
+                }}
+              />
+              <div
+                className="mb-5"
+                dangerouslySetInnerHTML={{
+                  __html: katex.renderToString(
+                    "I = \\frac{h}{3} \\left( f(x_{0}) + 4f(x_{1}) + f(x_{2}) \\right)",
+                    { throwOnError: false }
+                  ),
+                }}
+              />
+              <div
+                className="mb-5"
+                dangerouslySetInnerHTML={{
+                  __html: katex.renderToString(
+                    `I = \\frac{${solution.h}}{3}\\left[ f(${a}) + 4f(x_{1}) + f(${b}) \\right]`,
+                    { throwOnError: false }
+                  ),
+                }}
+              />
+              <div
+                className="mb-5"
+                dangerouslySetInnerHTML={{
+                  __html: katex.renderToString(
+                    `I = \\frac{${solution.h}}{3}\\left[ ${solution.functionA} + 4(${solution.functionAH}) + ${solution.functionB} \\right]`,
+                    { throwOnError: false }
+                  ),
+                }}
+              />
+            </div>
+          </>
+        );
+      case "compositeSimp":
+        return (
+          <>
+            <div className="w-full h-full p-4 flex flex-col items-center justify-center text-2xl mb-20">
+              <div
+                className="mb-5"
+                dangerouslySetInnerHTML={{
+                  __html: katex.renderToString("h = \\frac{b-a}{n}", {
+                    throwOnError: false,
+                  }),
+                }}
+              />
+              <div
+                className="mb-5"
+                dangerouslySetInnerHTML={{
+                  __html: katex.renderToString(`h = \\frac{${b}-${a}}{${n}}`, {
+                    throwOnError: false,
+                  }),
+                }}
+              />
+              <div
+                className="mb-5"
+                dangerouslySetInnerHTML={{
+                  __html: katex.renderToString(
+                    "I = \\frac{h}{3} \\left( f(x_{0}) + 4 \\sum_{i=1,3,5}^{n-1} f(x_{i}) + 2 \\sum_{i=2,4,6}^{n-1} f(x_{i}) + f(x_{n}) \\right)",
+                    { throwOnError: false }
+                  ),
+                }}
+              />
+              <div
+                className="mb-5"
+                dangerouslySetInnerHTML={{
+                  __html: katex.renderToString(
+                    `I = \\frac{${solution.h}}{3} \\left( f(${a}) + 4 \\sum_{i=1,3,5}^{n-1} f(x_{i}) + 2 \\sum_{i=2,4,6}^{n-1} f(x_{i}) + f(${b}) \\right)`,
+                    { throwOnError: false }
+                  ),
+                }}
+              />
+              <div
+                className="mb-5"
+                dangerouslySetInnerHTML={{
+                  __html: katex.renderToString(
+                    `I = \\frac{${solution.h}}{3} \\left( ${solution.functionA} + 4(${solution.sumood}) + 2(${solution.sumeven}) + ${solution.functionB} \\right)`,
+                    { throwOnError: false }
+                  ),
+                }}
+              />
+            </div>
+          </>
+        );
     }
   };
 
@@ -351,15 +352,17 @@ const Integration = () => {
               onChange={(e) => setb(parseFloat(e.target.value))}
             />
           </div>
-          {method ==="compositeTrape"|| method == "compositeSimp" && <div>
-            <p className="text-center text-2xl">n</p>
-            <input
-              type="text"
-              placeholder="n"
-              className="text-center border-2 rounded-lg p-2 border-purple-500 mt-5"
-              onChange={(e) => setn(parseFloat(e.target.value))}
-            />
-          </div>}
+          {(method === "compositeTrape" || method == "compositeSimp") && (
+              <div>
+                <p className="text-center text-2xl">n</p>
+                <input
+                  type="text"
+                  placeholder="n"
+                  className="text-center border-2 rounded-lg p-2 border-purple-500 mt-5"
+                  onChange={(e) => setn(parseFloat(e.target.value))}
+                />
+              </div>
+            )}
         </div>
         <div className="flex justify-center mb-6">
           <div>
