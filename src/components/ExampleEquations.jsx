@@ -84,7 +84,7 @@ const ExampleEquations = ({ data, onAddEquation, title }) => {
                     </div>
                   </div>
                   <button
-                    onClick={() => onAddEquation(item.matrixA, item.matrixB, item.matrixB.length)}
+                    onClick={() => onAddEquation(item.matrixA, item.matrixB , item.matrixX, item.matrixB.length)}
                     className="block bg-red-500 w-[100%] text-white pl-5 pr-5 mt-5 rounded-md hover:bg-red-600"
                   >
                     ADD

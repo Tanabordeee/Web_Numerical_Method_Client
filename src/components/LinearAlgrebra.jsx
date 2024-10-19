@@ -68,6 +68,7 @@ const LinearAlgebra = () => {
     } else {
       setMatrixA([]);
       setMatrixB([]);
+      setMatrixX([]);
       setAnswer({});
       setAnswer2([]);
       setAnswerConjugate({});
@@ -311,9 +312,10 @@ const LinearAlgebra = () => {
     GaussSeidel: GaussSeidels,
     jacobiMethods: Jacobi
   };
-  const handleEquationChange_ADD = (mtA, mtB, len) => {
+  const handleEquationChange_ADD = (mtA, mtB, mtX, len) => {
     setMatrixA(mtA);
     setMatrixB(mtB);
+    setMatrixX(mtX);
     setSize(len);
     console.log(len)
 };

@@ -93,6 +93,7 @@ const MatrixInput = ({
         className="text-center border w-[60%] h-20 mb-3 rounded-lg"
         type="number"
         key={index}
+        value={_}
         placeholder={`X${index + 1}`}
         onChange={(e) => handleMatrixXChange(e.target.value, index)}
       />
