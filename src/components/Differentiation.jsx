@@ -10,6 +10,8 @@ import ForwardDiviedhsquare from "../service/forwardDiviedhsquare";
 import BackwardDiveidhsquare from "../service/backwardDiveidhsquare";
 import CentralDiveidhsquare from "../service/CentralDiveidhsquare";
 import SolutionRenderer from "./SolutionRenderDiff";
+import ExampleEquations from "./ExampleEquations";
+import axios from "axios";
 const Diffentiation = () => {
   const [equation, setEquation] = useState("");
   const [latexEquation, setLatexEquation] = useState("");
@@ -22,6 +24,8 @@ const Diffentiation = () => {
   const [rResult, setrResult] = useState(null);
   const [rError, setrError] = useState(null);
   const [rDifff, setrDifff] = useState(null);
+  const [Data , setData] = useState([]);
+
   useEffect(() => {
     try {
       const renderedEquation = katex.renderToString(
@@ -33,7 +37,22 @@ const Diffentiation = () => {
       setLatexEquation("Invalid Equation");
     }
   }, [equation]);
-
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const apiUrl = `${import.meta.env.VITE_REACT_API_URL}/GetDifferentiation`;
+        const response = await axios.get(apiUrl);
+        setData(response.data.equation);
+      } catch (error) {
+        Swal.fire({
+          title: "Error",
+          text: error.message,
+          icon: "error",
+        });
+      }
+    }
+    fetchData();
+}, []);
   const computeResult = (Order, diffs) => {
     let computedResult;
 
@@ -153,11 +172,17 @@ const Diffentiation = () => {
       }
     }
   };
+  const handleEquationChange_ADD = (x,h,equation) => {
+    setx(x);
+    seth(h);
+    setEquation(equation);
+  };
   return (
     <>
       <div>
         <Navbar />
         <div className="h-full w-full flex flex-col items-center">
+          <ExampleEquations data={Data} onAddEquation={handleEquationChange_ADD} title={"Differentiation"} />
           <div className="flex justify-center mt-6 mb-6">
             <div
               dangerouslySetInnerHTML={{ __html: latexEquation }}
@@ -205,6 +230,7 @@ const Diffentiation = () => {
               <p className="text-center text-2xl mt-8 mb-1">equation</p>
               <input
                 type="text"
+                value={equation}
                 placeholder="input equation"
                 onChange={(e) => setEquation(e.target.value)}
                 className="text-center border-2 rounded-lg p-2 border-red-500 mt-5"
@@ -217,6 +243,7 @@ const Diffentiation = () => {
               <input
                 type="text"
                 placeholder="input X"
+                value={x}
                 onChange={(e) => setx(e.target.value)}
                 className="text-center border-2 rounded-lg p-2 border-green-500 mt-5"
               />
@@ -226,6 +253,7 @@ const Diffentiation = () => {
               <input
                 type="text"
                 placeholder="input h"
+                value={h}
                 onChange={(e) => seth(e.target.value)}
                 className="text-center border-2 rounded-lg p-2 border-blue-500 mt-5"
               />

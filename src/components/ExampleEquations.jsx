@@ -311,6 +311,42 @@ const ExampleEquations = ({ data, onAddEquation, title }) => {
                   </button>
                 </div>
               ))}
+              {
+                title == "Differentiation" && Array.isArray(data) &&
+                data.map((item, index) => (
+                  <div key={index} className="bg-gray-200 p-4 rounded-lg mb-5">
+                    <div className="mt-2">
+                      {item.x !== null && (
+                        <p>
+                          <strong>LOW:</strong> {item.x}
+                        </p>
+                      )}
+                      {item.h !== null && (
+                        <p>
+                          <strong>UPPER:</strong> {item.h}
+                        </p>
+                      )}
+                      {item.equation !== null && (
+                        <p>
+                          <strong>equation:</strong> {item.equation}
+                        </p>
+                      )}
+                    </div>
+                    <button
+                      className="block bg-red-500 w-[100%] text-white pl-5 pr-5 mt-5 rounded-md hover:bg-red-600"
+                      onClick={() =>
+                        onAddEquation(
+                          item.x,
+                          item.h,
+                          item.equation
+                        )
+                      }
+                    >
+                      ADD
+                    </button>
+                  </div>
+                ))
+              }
           </div>
         </div>
       )}
