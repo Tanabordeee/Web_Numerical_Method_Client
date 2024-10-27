@@ -5,7 +5,8 @@ import Swal from "sweetalert2";
 import PolynomialRegression from "../service/PolynomialRegression";
 import SimpleRegressionGraph from "./SimpleRegressionGraph";
 import MultipleRegression from "../service/MultipleLinearRegression";
-
+import ExampleEquations from "./ExampleEquations";
+import axios from "axios";
 const Extrapolation = () => {
   const [method, setMethod] = useState("SimpleRegression");
   const [x, setX] = useState([]);
@@ -21,8 +22,23 @@ const Extrapolation = () => {
   const [data, setData] = useState([]);
   const [dataX, setDataX] = useState([[]]);
   const [xarr , setXarr] = useState([]);
-
+  const [data2 , setData2] = useState([]);
   useEffect(() => {
+    async function fetchData() {
+      try {
+        const apiUrl = `${import.meta.env.VITE_REACT_API_URL}/GetExtrapolation`;
+        const response = await axios.get(apiUrl);
+        setData2(response.data.equation);
+        console.log(response.data.equation);
+      } catch (error) {
+        Swal.fire({
+          title: "Error",
+          text: error.message,
+          icon: "error"
+        });
+      }
+    }
+    fetchData();
     if (method === "MultipleRegression" && kOrder > 0 && Number.isInteger(kOrder)) {
       const newMatrixA = Array.from({ length: kOrder }, () => Array(kOrder).fill(0));
       const ArrayY = Array(kOrder).fill(0);
@@ -157,11 +173,38 @@ const Extrapolation = () => {
       MultipleRegressionMethod(e);
     }
   };
-
+  const handleEquationChange_ADD = (size , xValue , mOrder, kOrder , matrixX , matrixY , DataX , ArrayX) => {
+    if(size != null){
+      setSize(size);
+    }
+    if(xValue != null){
+      setXvalue(xValue);
+    }
+    if(mOrder != null){
+      setmOrder(mOrder);
+    }
+    if(kOrder != null ){
+      setKOrder(kOrder);
+    }
+    if(matrixX != null){
+      setX(matrixX);
+    }
+    if(matrixY != null){
+      setY(matrixY);
+    }
+    if(DataX != null) {
+      setDataX(DataX);
+      console.log(DataX);
+    }
+    if(ArrayX != null){
+      setXarr(ArrayX);
+    } 
+  };
   return (
     <div>
       <Navbar />
       <div className="">
+      <ExampleEquations data={data2} onAddEquation={handleEquationChange_ADD} title={"Extrapolation"} />
         <div className="flex justify-center my-4">
           <select
             onChange={(e) => setMethod(e.target.value)}
@@ -177,6 +220,10 @@ const Extrapolation = () => {
           y={y}
           setx={setX}
           sety={setY}
+          size = {size}
+          xvalue = {xvalue}
+          mOrder = {mOrder}
+          kOrder = {kOrder}
           setsize={setSize}
           setxvalue={setXvalue}
           setmOrder={setmOrder}

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 const ExtrapolationInput = ({
   x, setx, y, sety, setsize, setxvalue,
-  setmOrder, method, setKOrder, dataX, setdataX , setXarr ,xarr
+  setmOrder, method, setKOrder, dataX, setdataX , setXarr ,xarr , size , mOrder ,  xvalue , kOrder
 }) => {
 
   // Handle change for dataX matrix
@@ -24,6 +24,7 @@ const ExtrapolationInput = ({
           <input
             key={colIndex}
             className="text-center border h-20 mb-3 rounded-lg"
+            value={_}
             type="number"
             placeholder={`X${rowIndex + 1}${colIndex + 1}`}
             onChange={(e) => handleDataXChange(e.target.value, rowIndex, colIndex)}
@@ -50,6 +51,7 @@ const ExtrapolationInput = ({
         <input
           className="text-center border h-20 mb-3 rounded-lg"
           type="number"
+          value={_}
           placeholder={`x${index + 1}`}
           onChange={(e) => handleXChange(e.target.value, index)}
         />
@@ -74,6 +76,7 @@ const ExtrapolationInput = ({
         <input
           className="text-center border h-20 mb-3 rounded-lg"
           type="number"
+          value={_}
           placeholder={`f(X${index + 1})`}
           onChange={(e) => handleYChange(e.target.value, index)}
         />
@@ -97,6 +100,7 @@ const ExtrapolationInput = ({
         <input
           className="text-center border h-20 mb-3 rounded-lg"
           type="number"
+          value={_}
           placeholder={`X_value ${index + 1}`}
           onChange={(e) => handlearrxChange(e.target.value, index)}
         />
@@ -111,6 +115,7 @@ const ExtrapolationInput = ({
           <input
             className="p-2 border rounded-lg border-green-500"
             type="text"
+            value={size}
             placeholder="input size"
             onChange={(e) => setsize(parseInt(e.target.value))}
           />
@@ -120,6 +125,7 @@ const ExtrapolationInput = ({
           <input
             className="p-2 border rounded-lg border-red-500"
             type="text"
+            value={xvalue}
             placeholder="x value"
             onChange={(e) => setxvalue(parseFloat(e.target.value))}
           />
@@ -132,6 +138,7 @@ const ExtrapolationInput = ({
             <input
               className="p-2 border rounded-lg border-blue-500"
               type="text"
+              value={mOrder}
               placeholder="M order"
               onChange={(e) => setmOrder(parseFloat(e.target.value))}
             />
@@ -144,6 +151,7 @@ const ExtrapolationInput = ({
             <input
               className="p-2 border rounded-lg border-blue-500"
               type="text"
+              value={kOrder}
               placeholder="K order"
               onChange={(e) => {
                 const kOrder = parseInt(e.target.value) || 0;
