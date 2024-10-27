@@ -32,7 +32,13 @@ const ExampleEquations = ({ data, onAddEquation, title }) => {
                   </div>
                   <button
                     onClick={() => {
-                      onAddEquation(item.equation, item.XL, item.XR, item.Gval, item.SGval);
+                      onAddEquation(
+                        item.equation,
+                        item.XL,
+                        item.XR,
+                        item.Gval,
+                        item.SGval
+                      );
                     }}
                     className="bg-red-500 text-white pl-5 pr-5 rounded-md hover:bg-red-600"
                   >
@@ -69,7 +75,9 @@ const ExampleEquations = ({ data, onAddEquation, title }) => {
                       ))}
                     </div>
                     <label className="text-center block mt-4">Matrix B :</label>
-                    <div className="flex justify-center mt-2"> {/* ใช้ flex เพื่อจัดตำแหน่งให้อยู่ตรงกลาง */}
+                    <div className="flex justify-center mt-2">
+                      {" "}
+                      {/* ใช้ flex เพื่อจัดตำแหน่งให้อยู่ตรงกลาง */}
                       <div className="grid grid-cols-1 gap-2">
                         {item.matrixB.map((row, rowIndex) => (
                           <div
@@ -84,13 +92,82 @@ const ExampleEquations = ({ data, onAddEquation, title }) => {
                     </div>
                   </div>
                   <button
-                    onClick={() => onAddEquation(item.matrixA, item.matrixB , item.matrixX, item.matrixB.length)}
+                    onClick={() =>
+                      onAddEquation(
+                        item.matrixA,
+                        item.matrixB,
+                        item.matrixX,
+                        item.matrixB.length
+                      )
+                    }
                     className="block bg-red-500 w-[100%] text-white pl-5 pr-5 mt-5 rounded-md hover:bg-red-600"
                   >
                     ADD
                   </button>
                 </div>
               ))}
+
+            {title === "Interpolation" &&
+              Array.isArray(data) &&
+              data.map((item, index) => {
+                const maxLength = Math.max(
+                  item.matrixX.length,
+                  item.matrixY.length
+                );
+                return (
+                  <div
+                    key={index}
+                    className="flex flex-col bg-gray-200 p-4 rounded-lg justify-between items-center mb-5"
+                  >
+                    <div className="flex gap-10">
+                      <label className="text-center">X</label>
+                      <label className="text-center">Y</label>
+                    </div>
+                    <div className="grid grid-cols-2 gap-5 mt-2">
+                      <div className="grid grid-cols-1 gap-2">
+                        {Array.from({ length: maxLength }, (_, rowIndex) => (
+                          <div
+                            key={rowIndex}
+                            className="p-9 border border-gray-400 flex items-center justify-center"
+                            style={{ width: "50px", height: "50px" }}
+                          >
+                            {item.matrixX[rowIndex] !== undefined
+                              ? item.matrixX[rowIndex]
+                              : "-"}
+                          </div>
+                        ))}
+                      </div>
+
+                      <div className="grid grid-cols-1 gap-2">
+                        {Array.from({ length: maxLength }, (_, rowIndex) => (
+                          <div
+                            key={rowIndex}
+                            className="p-9 border border-gray-400 flex items-center justify-center"
+                            style={{ width: "50px", height: "50px" }}
+                          >
+                            {item.matrixY[rowIndex] !== undefined
+                              ? item.matrixY[rowIndex]
+                              : "-"}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    <button
+                    onClick={() =>
+                      onAddEquation(
+                        item.matrixX,
+                        item.matrixY,
+                        item.size,
+                        item.xValue
+                      )
+                    }
+                    className="block bg-red-500 w-[100%] text-white pl-5 pr-5 mt-5 rounded-md hover:bg-red-600"
+                  >
+                    ADD
+                  </button>
+                  </div>
+                );
+              })}
           </div>
         </div>
       )}

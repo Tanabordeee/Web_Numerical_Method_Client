@@ -1,4 +1,4 @@
-const InterpolationInput = ({ x, setx, y, sety, setsize, setxvalue }) => {
+const InterpolationInput = ({ x, setx, y, sety, setsize, setxvalue , xvalue , size}) => {
   const handleXChange = (value, row) => {
     const updateX = x.map((val, rowIndex) => {
       if (rowIndex === row) {
@@ -16,6 +16,7 @@ const InterpolationInput = ({ x, setx, y, sety, setsize, setxvalue }) => {
         <input
           className="text-center border h-20 mb-3 rounded-lg"
           type="number"
+          value={_}
           placeholder={`x${index + 1}`}
           onChange={(e) => handleXChange(e.target.value, index)}
         />
@@ -40,6 +41,7 @@ const InterpolationInput = ({ x, setx, y, sety, setsize, setxvalue }) => {
         <input
           className="text-center border h-20 mb-3 rounded-lg"
           type="number"
+          value={_}
           placeholder={`f(X${index + 1})`}
           onChange={(e) => handleYChange(e.target.value, index)}
         />
@@ -55,6 +57,7 @@ const InterpolationInput = ({ x, setx, y, sety, setsize, setxvalue }) => {
           <input
             className="p-2 border rounded-lg border-green-500"
             type="text"
+            value={size}
             placeholder="input size"
             onChange={(e) => setsize(parseInt(e.target.value))}
           />
@@ -64,6 +67,7 @@ const InterpolationInput = ({ x, setx, y, sety, setsize, setxvalue }) => {
           <input
             className="p-2 border rounded-lg border-red-500"
             type="text"
+            value={xvalue}
             placeholder="x value"
             onChange={(e) => setxvalue(parseFloat(e.target.value))}
           />

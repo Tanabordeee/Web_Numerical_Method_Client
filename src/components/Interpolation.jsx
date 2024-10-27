@@ -5,6 +5,8 @@ import Swal from "sweetalert2";
 import NewtonDiviedDifference from "../service/NewtonDiviedDifference";
 import LagrangeInterpolation from "../service/LagrangeInterpolation";
 import LinearSpline from "../service/LinearSpline";
+import ExampleEquations from "./ExampleEquations";
+import axios from 'axios';
 const Interpolation = () => {
   const [method, setMethod] = useState("Newton");
   const [x, setX] = useState([]);
@@ -15,8 +17,22 @@ const Interpolation = () => {
   const [loading, setLoading] = useState(false);
   const [solution, setSolution] = useState([]);
   const [solution2, setSolution2] = useState({});
-
+  const [data , setData] = useState([]);
   useEffect(() => {
+    async function fetchData() {
+      try {
+        const apiUrl = `${import.meta.env.VITE_REACT_API_URL}/GetInterpolation`;
+        const response = await axios.get(apiUrl);
+        setData(response.data.equation);
+      } catch (error) {
+        Swal.fire({
+          title: "Error",
+          text: error.message,
+          icon: "error"
+        });
+      }
+    }
+    fetchData();
     if (size > 0 && Number.isInteger(size)) {
       const ArrayX = Array(size).fill(0);
       const ArrayY = Array(size).fill(0);
@@ -203,10 +219,17 @@ const Interpolation = () => {
     }
   };
 
+  const handleEquationChange_ADD = (mtX, mtY, size, xValue) => {
+    setX(mtX);
+    setY(mtY);
+    setSize(size);
+    setXvalue(xValue);
+};
   return (
     <div>
       <Navbar />
       <div className="">
+        <ExampleEquations data={data} onAddEquation={handleEquationChange_ADD} title={"Interpolation"} />
         <div className="flex justify-center my-4">
           <select
             onChange={(e) => setMethod(e.target.value)}
@@ -225,6 +248,8 @@ const Interpolation = () => {
           sety={setY}
           setsize={setSize}
           setxvalue={setXvalue}
+          xvalue = {xvalue}
+          size = {size}
         />
         <div className="flex justify-center m-3">
           <button
