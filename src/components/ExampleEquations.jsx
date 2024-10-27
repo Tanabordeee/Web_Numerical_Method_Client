@@ -270,6 +270,47 @@ const ExampleEquations = ({ data, onAddEquation, title }) => {
                   </button>
                 </div>
               ))}
+            {title == "Integration" &&
+              Array.isArray(data) &&
+              data.map((item, index) => (
+                <div key={index} className="bg-gray-200 p-4 rounded-lg mb-5">
+                  <div className="mt-2">
+                    {item.low !== null && (
+                      <p>
+                        <strong>LOW:</strong> {item.low}
+                      </p>
+                    )}
+                    {item.upper !== null && (
+                      <p>
+                        <strong>UPPER:</strong> {item.upper}
+                      </p>
+                    )}
+                    {item.n !== null && (
+                      <p>
+                        <strong>n:</strong> {item.n}
+                      </p>
+                    )}
+                    {item.equation !== null && (
+                      <p>
+                        <strong>equation:</strong> {item.equation}
+                      </p>
+                    )}
+                  </div>
+                  <button
+                    className="block bg-red-500 w-[100%] text-white pl-5 pr-5 mt-5 rounded-md hover:bg-red-600"
+                    onClick={() =>
+                      onAddEquation(
+                        item.low,
+                        item.upper,
+                        item.n,
+                        item.equation
+                      )
+                    }
+                  >
+                    ADD
+                  </button>
+                </div>
+              ))}
           </div>
         </div>
       )}

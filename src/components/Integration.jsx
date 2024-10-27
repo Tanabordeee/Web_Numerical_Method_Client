@@ -8,6 +8,8 @@ import IntegrationGraph from "./IntegrationGraph";
 import CompositeTrapeZoidal from "../service/CompositeTrapezoidal";
 import SimpSonRulemethod from "../service/Simsonrule";
 import CompositeSimpsonRule from "../service/CompositeSimsonRule";
+import ExampleEquations from "./ExampleEquations";
+import axios from "axios";
 const Integration = () => {
   const [method, setMethod] = useState("TrapeSingle");
   const [a, seta] = useState(NaN);
@@ -19,7 +21,7 @@ const Integration = () => {
   const [equation, setEquation] = useState("");
   const [latexEquation, setLatexEquation] = useState("");
   const [checkinput, setCheckInput] = useState(true);
-
+  const [Data , setData] = useState([])
   const TrapeZoidalSingle = async (e) => {
     e.preventDefault();
     try {
@@ -102,6 +104,7 @@ const Integration = () => {
   };
 
   useEffect(() => {
+    
     try {
       const renderedEquation = katex.renderToString(
         `\\int_{${a}}^{${b}} ${equation} \\, dx`,
@@ -120,7 +123,23 @@ const Integration = () => {
       setCheckInput(true);
     }
   }, [a, b]);
-
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const apiUrl = `${import.meta.env.VITE_REACT_API_URL}/GetIntegration`;
+        const response = await axios.get(apiUrl);
+        setData(response.data.equation);
+        console.log(response.data.equation);
+      } catch (error) {
+        Swal.fire({
+          title: "Error",
+          text: error.message,
+          icon: "error",
+        });
+      }
+    }
+    fetchData();
+}, []);
   const handleCalculate = (e) => {
     if (method === "TrapeSingle") {
       TrapeZoidalSingle(e);
@@ -311,11 +330,17 @@ const Integration = () => {
         );
     }
   };
-
+  const handleEquationChange_ADD = (low , upper , n , equation) => {
+    seta(low);
+    setb(upper);
+    setn(n);
+    setEquation(equation);
+  };
   return (
     <div>
       <Navbar />
       <div className="h-full w-full flex flex-col items-center">
+      <ExampleEquations data={Data} onAddEquation={handleEquationChange_ADD} title={"Integration"} />
         <div className="flex justify-center my-4">
           <select
             onChange={(e) => setMethod(e.target.value)}
@@ -339,6 +364,7 @@ const Integration = () => {
             <input
               type="text"
               placeholder="low"
+              value={a}
               onChange={(e) => seta(parseFloat(e.target.value))}
               className="text-center border-2 rounded-lg p-2 border-green-500 mt-5"
             />
@@ -348,6 +374,7 @@ const Integration = () => {
             <input
               type="text"
               placeholder="upper"
+              value={b}
               className="text-center border-2 rounded-lg p-2 border-red-500 mt-5"
               onChange={(e) => setb(parseFloat(e.target.value))}
             />
@@ -358,6 +385,7 @@ const Integration = () => {
                 <input
                   type="text"
                   placeholder="n"
+                  value={n}
                   className="text-center border-2 rounded-lg p-2 border-purple-500 mt-5"
                   onChange={(e) => setn(parseFloat(e.target.value))}
                 />
@@ -371,6 +399,7 @@ const Integration = () => {
               type="text"
               placeholder="input equation"
               disabled={checkinput}
+              value={equation}
               onChange={(e) => setEquation(e.target.value)}
               className={`text-center border-2 rounded-lg p-2 border-blue-500 mt-5 ${
                 checkinput === true ? "opacity-25" : "opacity-100"
