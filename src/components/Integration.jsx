@@ -129,7 +129,6 @@ const Integration = () => {
         const apiUrl = `${import.meta.env.VITE_REACT_API_URL}/GetIntegration`;
         const response = await axios.get(apiUrl);
         setData(response.data.equation);
-        console.log(response.data.equation);
       } catch (error) {
         Swal.fire({
           title: "Error",
