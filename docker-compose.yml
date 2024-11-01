@@ -1,0 +1,21 @@
+version: "3"
+services:
+  server:
+    build: ./server
+    container_name: server
+    image: numer_server_image
+    ports:
+      - 8080:8080
+    environment:
+      PORT: 8080
+      DATABASE_URL: postgresql://myuser:cTcncmnFr10DA33WcAQNFzwzf7909r5X@dpg-cs1qc5dds78s73b8q060-a.singapore-postgres.render.com/mydatabase_7r1h
+  client:
+    build: ./client/numerical-method-project
+    container_name: client
+    image: numer_client_image
+    ports:
+      - 5173:5173
+    environment:
+      VITE_REACT_API_URL: http://localhost:8080/api
+    depends_on:
+      - server
