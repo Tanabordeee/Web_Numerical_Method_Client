@@ -27,6 +27,6 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: ./Web_Numerical_Method_Client/Dockerfile
+          file: ./Dockerfile
           push: true
           tags: tanabordeee/numerical-client:latest
